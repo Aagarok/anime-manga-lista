@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#11131a">
+<title>Moja Lista — Anime i Manga</title>
+<style>
+:root{color-scheme:dark;--bg:#101219;--panel:#191c26;--panel2:#202431;--line:#343949;--muted:#a5aabd;--text:#f5f6fb;--blue:#5793ff;--pink:#ff66ad;--green:#51cf87;--red:#ff646e;--orange:#ffa34d;--yellow:#f4ce5e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#30344a 0,transparent 55%),var(--bg);color:var(--text);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:9px 12px;transition:.15s}button:hover{filter:brightness(1.15);transform:translateY(-1px)}button:disabled{opacity:.4;cursor:not-allowed;transform:none}.primary{background:var(--blue);color:#081326;border-color:transparent;font-weight:750}.danger{color:#ff858b}.quiet{background:transparent}.app{max-width:1500px;margin:auto;padding:22px;min-height:100vh}.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{font-weight:850;letter-spacing:.02em}.brand small{display:block;color:var(--muted);font-size:12px;font-weight:500;letter-spacing:0}.screen{display:none}.screen.active{display:block}.hero{min-height:calc(100vh - 110px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px solid #ffffff12;border-radius:28px;padding:clamp(24px,6vw,70px);background:linear-gradient(90deg,#11131acc,#11131a75),url('assets/tlo.png') center/cover no-repeat, #171a24;overflow:hidden}.hero h1{font-size:clamp(40px,7vw,76px);line-height:1;margin:0 0 12px;letter-spacing:-.045em}.hero p{color:#d0d4e3;max-width:520px;margin:0 0 35px}.home-cards{display:grid;grid-template-columns:repeat(2,minmax(220px,330px));gap:22px;width:100%;justify-content:center}.home-card{border:0;min-height:190px;border-radius:24px;font-size:clamp(24px,3vw,34px);font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;box-shadow:0 16px 40px #0004}.home-card .emoji{font-size:46px}.anime-card{background:linear-gradient(135deg,#ff4b61,#c51f4d)}.manga-card{background:linear-gradient(135deg,#4b89ff,#3644b9)}.subtle{color:var(--muted)}.section-head{display:flex;align-items:center;gap:12px;margin:8px 0 18px}.section-head h1{font-size:30px;margin:0}.spacer{flex:1}.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding:12px;background:#191c26d9;border:1px solid var(--line);border-radius:16px}.toolbar input[type=search]{flex:1;min-width:190px}.field,input,select,textarea{background:#10131b;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;outline:none;min-width:0}.field:focus,input:focus,select:focus,textarea:focus{border-color:var(--blue)}.toolbar select{max-width:155px}.tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;margin:13px 0 16px;background:#191c26;border:1px solid var(--line);border-radius:14px;padding:5px}.tab{background:transparent;border:0;border-radius:8px;color:var(--muted);font-size:12px;font-weight:750;min-height:44px;padding:6px}.tab.active{background:#ffffff0d;color:var(--tabcolor,var(--blue));box-shadow:inset 0 -3px var(--tabcolor,var(--blue))}.list{display:flex;flex-direction:column;gap:7px}.list-row{display:flex;align-items:center;gap:13px;background:var(--panel);border:1px solid var(--line);padding:10px 13px;border-radius:13px;min-width:0}.thumb{width:48px;height:48px;flex:0 0 auto;display:grid;place-items:center;border-radius:10px;overflow:hidden;font-size:24px;background:var(--accent,#5793ff)}.thumb img{width:100%;height:100%;object-fit:cover}.entry-title{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.entry-sub{font-size:13px;color:var(--muted)}.entry-info{min-width:0;flex:1}.row-actions{display:flex;gap:6px;align-items:center}.icon-btn{padding:6px 9px;min-width:35px;font-size:17px}.heart{color:#ff657e}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;position:relative;cursor:default}.tile.favorite{border-color:#ff657e66}.poster{height:180px;background:var(--accent,#5793ff);display:grid;place-items:center;font-size:48px;overflow:hidden;position:relative}.poster img{width:100%;height:100%;object-fit:cover}.poster-actions{position:absolute;inset:8px 8px auto;display:flex;justify-content:space-between}.poster-actions button{background:#111a;border:0;padding:7px 9px}.tile-body{padding:12px}.tile-title{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tile-actions{display:flex;gap:7px;margin-top:10px}.tile-actions button{flex:1}.empty{padding:70px 20px;text-align:center;color:var(--muted);background:#191c2670;border:1px dashed var(--line);border-radius:16px}.stats{margin-top:15px;border:1px solid var(--line);background:var(--panel);border-radius:15px;overflow:hidden}.stats-toggle{display:flex;width:100%;align-items:center;gap:10px;background:transparent;border:0;border-radius:0;text-align:left}.stats-body{display:none;padding:15px;gap:12px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));border-top:1px solid var(--line)}.stats-body.open{display:grid}.stat{padding:12px;border-radius:12px;background:#ffffff08}.stat strong{display:block;font-size:25px}.stat span{font-size:11px;letter-spacing:.04em;color:var(--muted);font-weight:800}.modal-backdrop{position:fixed;inset:0;z-index:5;background:#000a;display:none;align-items:center;justify-content:center;padding:16px}.modal-backdrop.open{display:flex}.modal{width:min(650px,100%);max-height:92vh;overflow:auto;background:#191c26;border:1px solid var(--line);border-radius:20px;box-shadow:0 25px 90px #0008}.modal-head,.modal-foot{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}.modal-head h2{margin:0;font-size:20px}.modal-foot{border-bottom:0;border-top:1px solid var(--line)}.form-grid{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-field{display:flex;flex-direction:column;gap:6px}.form-field label{font-size:12px;color:var(--muted);font-weight:750}.wide{grid-column:1/-1}.counter{display:flex;gap:7px}.counter input{flex:1}.choice-row{display:flex;flex-wrap:wrap;gap:8px}.choice{width:36px;height:36px;display:grid;place-items:center;padding:0;font-size:18px}.choice.selected{outline:2px solid white;outline-offset:2px}.color-choice{width:25px;height:25px;padding:0;border-radius:50%;border:2px solid #ffffff33}.color-choice.selected{outline:2px solid white;outline-offset:2px}.preview{display:flex;align-items:center;gap:12px}.preview .thumb{width:60px;height:60px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#303747;border:1px solid #596276;padding:11px 16px;border-radius:12px;display:none;z-index:9;box-shadow:0 8px 30px #0005}.toast.show{display:block}.hint{font-size:12px;color:var(--muted);margin:12px 0}.footer-note{text-align:center;color:var(--muted);font-size:12px;padding:18px}
+@media(max-width:760px){.app{padding:12px}.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}.toolbar select{max-width:none;flex:1}.toolbar .primary{flex:1}.home-cards{grid-template-columns:1fr;max-width:340px}.home-card{min-height:140px}.hero{min-height:calc(100vh - 80px)}.section-head h1{font-size:24px}.list-row{gap:9px;padding:9px}.row-actions{gap:3px}.row-actions button{padding:6px}.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}.poster{height:160px}}
+@media(max-width:420px){.entry-sub{font-size:11px}.thumb{width:40px;height:40px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile-body{padding:9px}.poster{height:135px}.tile-actions button{padding:7px 5px;font-size:13px}.toolbar{gap:6px}.toolbar button{padding:8px}.brand{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topline">
+    <div class="brand">MOJA LISTA <small>Twoja prywatna kolekcja anime i mangi</small></div>
+    <button class="quiet" id="homeBtn" title="Menu główne">⌂ Menu</button>
+  </div>
+
+  <main id="homeScreen" class="screen active">
+    <section class="hero">
+      <h1>Moja Lista</h1>
+      <p>Wszystkie anime i mangi w jednym miejscu. Zapisuj postępy, organizuj kolekcję i wybierz, co oglądać lub czytać dalej.</p>
+      <div class="home-cards">
+        <button class="home-card anime-card" data-open="ANIME"><span class="emoji">▣</span>ANIME<span style="font-size:13px;font-weight:550;opacity:.85">Śledź odcinki</span></button>
+        <button class="home-card manga-card" data-open="MANGA"><span class="emoji">▤</span>MANGA<span style="font-size:13px;font-weight:550;opacity:.85">Śledź rozdziały</span></button>
+      </div>
+    </section>
+    <p class="footer-note">Dane zapisują się lokalnie w tej przeglądarce na tym urządzeniu.</p>
+  </main>
+
+  <main id="collectionScreen" class="screen">
+    <div class="section-head"><button id="backBtn">←</button><h1 id="sectionTitle">ANIME</h1><div class="spacer"></div><span id="countBadge" class="subtle"></span></div>
+    <div class="toolbar">
+      <button id="importBtn">⇧ Importuj CSV</button><button id="exportBtn">⇩ Eksportuj CSV</button>
+      <input id="search" type="search" placeholder="⌕ Szukaj po tytule…">
+      <button id="favFilter" title="Pokaż ulubione">♡</button>
+      <select id="sortBy" aria-label="Sortowanie"><option value="date">Według daty</option><option value="alpha">Alfabetycznie</option></select>
+      <button id="sortDirection" title="Zmień kierunek">↑</button>
+      <select id="viewMode" aria-label="Widok"><option value="list">☷ Lista</option><option value="grid">▦ Kafelki</option></select>
+      <button id="randomBtn" title="Losuj z planowanych">🎲 Losuj</button>
+      <button id="addBtn" class="primary">＋ Dodaj</button>
+      <input type="file" id="csvFile" accept=".csv,text/csv" hidden>
+    </div>
+    <nav class="tabs" id="tabs"></nav>
+    <section id="entries"></section>
+    <section class="stats">
+      <button class="stats-toggle" id="statsToggle"><span>▥</span><strong>Moje prywatne statystyki</strong><span class="spacer"></span><span id="statsChevron">⌃</span></button>
+      <div class="stats-body" id="statsBody"></div>
+    </section>
+    <p class="hint">Kliknij dwukrotnie pozycję, aby ją edytować. Użyj +/−, aby zmienić postęp.</p>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head"><h2 id="modalTitle">Dodaj nową pozycję</h2><div class="spacer"></div><button id="closeModal" aria-label="Zamknij">✕</button></div>
+    <form id="entryForm">
+      <div class="form-grid">
+        <div class="form-field wide"><label for="titleInput">NAZWA</label><input id="titleInput" required maxlength="200" placeholder="Wpisz tytuł…"></div>
+        <div class="form-field"><label id="counterLabel" for="currentCount">ODCINKI</label><div class="counter"><button type="button" id="minusCount">−</button><input id="currentCount" type="number" min="0" step="1" value="0"><button type="button" id="plusCount">＋</button></div></div>
+        <div class="form-field"><label for="maxCount">MAKSYMALNA LICZBA (OPCJONALNIE)</label><input id="maxCount" type="number" min="1" step="1" placeholder="Brak limitu"></div>
+        <div class="form-field wide"><label for="statusInput">STATUS</label><select id="statusInput"></select></div>
+        <div class="form-field wide"><label><input id="favoriteInput" type="checkbox" style="width:auto;min-width:0"> Dodaj do ulubionych</label></div>
+        <div class="form-field wide"><label>OKŁADKA / ZDJĘCIE</label><div class="preview"><div id="previewThumb" class="thumb">▣</div><div><input id="imageInput" type="file" accept="image/*"><button type="button" id="removeImage" class="quiet danger">Usuń zdjęcie</button></div></div></div>
+        <div class="form-field wide" id="iconField"><label>IKONA ZASTĘPCZA</label><div id="iconChoices" class="choice-row"></div><label>KOLOR</label><div id="colorChoices" class="choice-row"></div></div>
+      </div>
+      <div class="modal-foot"><button type="button" id="cancelModal">Anuluj</button><div class="spacer"></div><button class="primary" type="submit">Zapisz</button></div>
+    </form>
+  </section>
+</div>
+<div id="toast" class="toast" role="status"></div>
+
+<script>
+(() => {
+const STATUSES = ["Planowane","W toku","Wstrzymane","Porzucone","Zakończone","Oczekuje na kolejny sezon"];
+const STATUS_COLORS = {"Planowane":"#5793ff","W toku":"#ff66ad","Wstrzymane":"#f4ce5e","Porzucone":"#ff646e","Zakończone":"#51cf87","Oczekuje na kolejny sezon":"#ffa34d"};
+const ICONS = {"star.fill":"★","heart.fill":"♥","flame.fill":"♨","bolt.fill":"ϟ","tv.fill":"▣","book.fill":"▤"};
+const COLORS = {"Blue":"#5793ff","Purple":"#a778ff","Pink":"#ff66ad","Orange":"#ffa34d","Red":"#ff5267","Green":"#36bd7b"};
+const KEYS = {ANIME:"listaAnime",MANGA:"listaMangi"};
+const $ = id => document.getElementById(id);
+let section = "ANIME", activeStatus = "W toku", entries = [], favoriteOnly = false, editingId = null, editDate = null, imageBase64 = null, chosenIcon = "star.fill", chosenColor = "Blue";
+let sortBy = localStorage.getItem("wybraneKryteriumSortowania") || "date";
+let sortAsc = localStorage.getItem("kierunekSortowaniaRosnaco") !== "false";
+let viewMode = localStorage.getItem("wybranyStylWidoku") || "list";
+let statsOpen = false, toastTimer;
+const normStatus = s => s === "Oczekuje na\nkolejny sezon" ? "Oczekuje na kolejny sezon" : s;
+const escapeHtml = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`);
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2800)}
+function save(){try{localStorage.setItem(KEYS[section],JSON.stringify(entries));}catch(e){toast("Brak miejsca na zapis. Spróbuj użyć mniejszych okładek.");}}
+function load(){try{entries=JSON.parse(localStorage.getItem(KEYS[section])||"[]");if(!Array.isArray(entries))entries=[];}catch{entries=[]}}
+function showScreen(which){$("homeScreen").classList.toggle("active",which==="home");$("collectionScreen").classList.toggle("active",which==="collection");$("homeBtn").style.visibility=which==="home"?"hidden":"visible"}
+function openCollection(which){section=which;activeStatus="W toku";favoriteOnly=false;$("search").value="";load();$("sectionTitle").textContent=which;$("counterLabel").textContent=which==="ANIME"?"ODCINKI":"ROZDZIAŁY";$("favFilter").classList.remove("heart");$("favFilter").textContent="♡";showScreen("collection");render()}
+function renderTabs(){$("tabs").innerHTML=STATUSES.map(s=>`<button class="tab ${activeStatus===s?"active":""}" data-status="${escapeHtml(s)}" style="--tabcolor:${STATUS_COLORS[s]}">${escapeHtml(s)}</button>`).join("");$("tabs").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{activeStatus=b.dataset.status;render()}))}
+function sortedEntries(){
+ let arr=entries.filter(e=>normStatus(e.statusKarty)===activeStatus);
+ const q=$("search").value.trim().toLocaleLowerCase("pl");
+ if(q)arr=arr.filter(e=>(e.tytul||"").toLocaleLowerCase("pl").includes(q));
+ if(favoriteOnly)arr=arr.filter(e=>e.czyUlubione);
+ arr.sort((a,b)=>{if(!!a.czyUlubione!==!!b.czyUlubione)return a.czyUlubione?-1:1;let cmp=sortBy==="alpha"?(a.tytul||"").localeCompare(b.tytul||"","pl",{sensitivity:"base"}):(new Date(a.dataDodania||0)-new Date(b.dataDodania||0));return sortAsc?cmp:-cmp});
+ return arr;
+}
+function thumb(e,cls="thumb"){if(e.zdjecieBase64)return `<div class="${cls}" style="--accent:${COLORS[e.kolor]||COLORS.Blue}"><img src="${e.zdjecieBase64}" alt=""></div>`;return `<div class="${cls}" style="--accent:${COLORS[e.kolor]||COLORS.Blue}">${ICONS[e.ikona]||"★"}</div>`}
+function changeCount(id,delta){const e=entries.find(x=>x.id===id);if(!e)return;e.aktualnyLicznik=Math.max(0,(Number(e.aktualnyLicznik)||0)+delta);if(delta>0&&e.maxLicznik!=null&&e.maxLicznik!==""&&e.aktualnyLicznik>=Number(e.maxLicznik))e.statusKarty="Zakończone";else if(delta<0&&normStatus(e.statusKarty)==="Zakończone")e.statusKarty="W toku";save();render()}
+function toggleFavorite(id){const e=entries.find(x=>x.id===id);if(e){e.czyUlubione=!e.czyUlubione;save();render()}}
+function deleteEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;if(confirm(`Czy na pewno usunąć „${e.tytul}”?`)){entries=entries.filter(x=>x.id!==id);save();render();toast("Pozycja została usunięta.")}}
+function renderEntries(){
+ const arr=sortedEntries(), host=$("entries");$("countBadge").textContent=`${arr.length} / ${entries.length}`;
+ if(!arr.length){host.innerHTML='<div class="empty"><div style="font-size:34px;margin-bottom:8px">◌</div><strong>Brak pozycji spełniających kryteria</strong><div style="margin-top:7px">Dodaj tytuł albo zmień filtr wyszukiwania.</div></div>';return}
+ const counter=section==="ANIME"?"Odcinki":"Rozdziały";
+ if(viewMode==="list"){
+  host.innerHTML=`<div class="list">${arr.map(e=>`<article class="list-row" data-edit="${e.id}" title="Dwuklik, aby edytować">${thumb(e)}<div class="entry-info"><div class="entry-title">${escapeHtml(e.tytul)} ${e.czyUlubione?'<span class="heart">♥</span>':""}</div><div class="entry-sub">${counter}: ${Number(e.aktualnyLicznik)||0}${e.maxLicznik!=null&&e.maxLicznik!==""?` / ${Number(e.maxLicznik)}`:""}</div></div><div class="row-actions"><button class="icon-btn" data-action="minus" data-id="${e.id}" title="-1">−</button><button class="icon-btn" data-action="plus" data-id="${e.id}" title="+1">＋</button><button class="icon-btn" data-action="fav" data-id="${e.id}" title="Ulubione">${e.czyUlubione?"♥":"♡"}</button><button class="icon-btn danger" data-action="delete" data-id="${e.id}" title="Usuń">⌫</button><button class="icon-btn" data-action="edit" data-id="${e.id}" title="Edytuj">✎</button></div></article>`).join("")}</div>`;
+ }else{
+  host.innerHTML=`<div class="grid">${arr.map(e=>`<article class="tile ${e.czyUlubione?"favorite":""}" data-edit="${e.id}"><div class="poster" style="--accent:${COLORS[e.kolor]||COLORS.Blue}">${e.zdjecieBase64?`<img src="${e.zdjecieBase64}" alt="">`:(ICONS[e.ikona]||"★")}<div class="poster-actions"><button data-action="delete" data-id="${e.id}" title="Usuń">⌫</button><button data-action="fav" data-id="${e.id}" class="${e.czyUlubione?"heart":""}" title="Ulubione">${e.czyUlubione?"♥":"♡"}</button></div></div><div class="tile-body"><div class="tile-title" title="${escapeHtml(e.tytul)}">${escapeHtml(e.tytul)}</div><div class="entry-sub">${counter}: ${Number(e.aktualnyLicznik)||0}${e.maxLicznik!=null&&e.maxLicznik!==""?` / ${Number(e.maxLicznik)}`:""}</div><div class="tile-actions"><button data-action="minus" data-id="${e.id}">− 1</button><button data-action="plus" data-id="${e.id}">＋ 1</button><button data-action="edit" data-id="${e.id}">Edytuj</button></div></div></article>`).join("")}</div>`;
+ }
+ host.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",ev=>{ev.stopPropagation();const id=b.dataset.id;switch(b.dataset.action){case"minus":changeCount(id,-1);break;case"plus":changeCount(id,1);break;case"fav":toggleFavorite(id);break;case"delete":deleteEntry(id);break;case"edit":openForm(id);break}}));
+ host.querySelectorAll("[data-edit]").forEach(el=>{let timer=null;el.addEventListener("dblclick",()=>openForm(el.dataset.edit));el.addEventListener("click",ev=>{if(ev.target.closest("button"))return;clearTimeout(timer);timer=setTimeout(()=>{},250)})});
+}
+function renderStats(){
+ const total=entries.reduce((s,e)=>s+(Number(e.aktualnyLicznik)||0),0);
+ $("statsBody").innerHTML=`<div class="stat"><span>ŁĄCZNY POSTĘP</span><strong>${total}</strong><span>zaliczonych ${section==="ANIME"?"odcinków":"rozdziałów"}</span></div>`+STATUSES.map(s=>`<div class="stat"><span>${escapeHtml(s.toUpperCase())}</span><strong>${entries.filter(e=>normStatus(e.statusKarty)===s).length}</strong></div>`).join("");
+ $("statsBody").classList.toggle("open",statsOpen);$("statsChevron").textContent=statsOpen?"⌄":"⌃";
+}
+function render(){renderTabs();renderEntries();renderStats();$("sortBy").value=sortBy;$("sortDirection").textContent=sortAsc?"↑":"↓";$("viewMode").value=viewMode;$("randomBtn").style.display=activeStatus==="Planowane"?"inline-block":"none";$("favFilter").classList.toggle("heart",favoriteOnly);$("favFilter").textContent=favoriteOnly?"♥":"♡"}
+function openForm(id=null){
+ editingId=id;const e=id?entries.find(x=>x.id===id):null;editDate=e?.dataDodania||new Date().toISOString();imageBase64=e?.zdjecieBase64||null;chosenIcon=e?.ikona|| (section==="ANIME"?"tv.fill":"book.fill");chosenColor=e?.kolor||(section==="ANIME"?"Red":"Blue");
+ $("modalTitle").textContent=e?"Edytuj pozycję":"Dodaj nową pozycję";$("titleInput").value=e?.tytul||"";$("currentCount").value=e?.aktualnyLicznik??0;$("maxCount").value=e?.maxLicznik??"";$("statusInput").innerHTML=STATUSES.map(s=>`<option>${escapeHtml(s)}</option>`).join("");$("statusInput").value=normStatus(e?.statusKarty||"Planowane");$("favoriteInput").checked=!!e?.czyUlubione;$("imageInput").value="";renderChoices();updatePreview();$("modalBackdrop").classList.add("open");$("titleInput").focus();
+}
+function renderChoices(){
+ $("iconChoices").innerHTML=Object.entries(ICONS).map(([k,v])=>`<button type="button" class="choice ${chosenIcon===k?"selected":""}" data-icon="${k}">${v}</button>`).join("");
+ $("iconChoices").querySelectorAll("[data-icon]").forEach(b=>b.onclick=()=>{chosenIcon=b.dataset.icon;renderChoices();updatePreview()});
+ $("colorChoices").innerHTML=Object.entries(COLORS).map(([k,v])=>`<button type="button" class="color-choice ${chosenColor===k?"selected":""}" data-color="${k}" style="background:${v}" title="${k}"></button>`).join("");
+ $("colorChoices").querySelectorAll("[data-color]").forEach(b=>b.onclick=()=>{chosenColor=b.dataset.color;renderChoices();updatePreview()});
+ $("iconField").style.display=imageBase64?"none":"flex";
+}
+function updatePreview(){$("previewThumb").style.background=COLORS[chosenColor]||COLORS.Blue;$("previewThumb").innerHTML=imageBase64?`<img src="${imageBase64}" alt="">`:(ICONS[chosenIcon]||"★");$("removeImage").style.display=imageBase64?"inline-block":"none";$("iconField").style.display=imageBase64?"none":"flex"}
+function closeForm(){$("modalBackdrop").classList.remove("open")}
+function saveForm(ev){ev.preventDefault();const title=$("titleInput").value.trim();if(!title)return;const count=Math.max(0,parseInt($("currentCount").value,10)||0),maxVal=$("maxCount").value.trim(),max=maxVal===""?null:Math.max(1,parseInt(maxVal,10)||1);let status=$("statusInput").value;if(max!==null&&count>=max&&status!=="Oczekuje na kolejny sezon")status="Zakończone";
+ const item={id:editingId||uid(),tytul:title,ikona:chosenIcon,kolor:chosenColor,aktualnyLicznik:count,maxLicznik:max,zdjecieBase64:imageBase64,statusKarty:status,dataDodania:editDate,czyUlubione:$("favoriteInput").checked};
+ if(editingId){const i=entries.findIndex(x=>x.id===editingId);if(i>=0)entries[i]=item;else entries.push(item)}else entries.push(item);
+ save();closeForm();render();toast(editingId?"Zmiany zapisane.":"Dodano pozycję.");
+}
+function exportCSV(){
+ const rows=[["Nazwa","Ilosc","Status","Ulubione"],...entries.map(e=>[e.tytul,e.aktualnyLicznik,normStatus(e.statusKarty),e.czyUlubione?"tak":"nie"])];
+ const csv=rows.map(row=>row.map(v=>{let s=String(v??"");return /[;"\n,]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}).join(";")).join("\r\n");
+ const blob=new Blob(["\ufeff",csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=`kopia_${section.toLowerCase()}.csv`;a.click();URL.revokeObjectURL(url);toast("Plik CSV został przygotowany.");
+}
+function parseCSV(text){
+ const rows=[];let row=[],field="",quoted=false;
+ for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'&&text[i+1]==='"'){field+='"';i++}else if(c==='"')quoted=false;else field+=c}else if(c==='"')quoted=true;else if(c===";"||c===","){row.push(field);field=""}else if(c==="\n"||c==="\r"){if(c==="\r"&&text[i+1]==="\n")i++;row.push(field);if(row.some(v=>v.trim()!==""))rows.push(row);row=[];field=""}else field+=c}
+ row.push(field);if(row.some(v=>v.trim()!==""))rows.push(row);return rows;
+}
+async function importCSV(file){
+ try{const rows=parseCSV((await file.text()).replace(/^\uFEFF/,""));let added=0,seen=new Set(entries.map(e=>(e.tytul||"").toLocaleLowerCase("pl")));
+ rows.forEach((r,i)=>{const title=(r[0]||"").trim();if(!title||(i===0&&["nazwa","title"].includes(title.toLowerCase())))return;const key=title.toLocaleLowerCase("pl");if(seen.has(key))return;seen.add(key);let status=STATUSES.find(s=>s.toLocaleLowerCase("pl")===normStatus((r[2]||"Planowane").trim()).toLocaleLowerCase("pl"))||"Planowane";let fav=["tak","true","1","yes"].includes((r[3]||"").trim().toLowerCase());entries.push({id:uid(),tytul:title,ikona:section==="ANIME"?"tv.fill":"book.fill",kolor:section==="ANIME"?"Red":"Blue",aktualnyLicznik:Math.max(0,parseInt(r[1],10)||0),maxLicznik:null,zdjecieBase64:null,statusKarty:status,dataDodania:new Date().toISOString(),czyUlubione:fav});added++});
+ save();render();toast(`Import zakończony. Dodano: ${added}.`)}catch(e){toast("Nie udało się odczytać tego pliku CSV.")}
+}
+function randomPlanned(){const pool=entries.filter(e=>normStatus(e.statusKarty)==="Planowane");if(!pool.length){toast("Brak pozycji w Planowanych.");return}const e=pool[Math.floor(Math.random()*pool.length)];if(confirm(`Los na dziś: „${e.tytul}”!\n\nPrzenieść tę pozycję do „W toku” i zacząć?`)){e.statusKarty="W toku";save();activeStatus="W toku";render()}}
+document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openCollection(b.dataset.open)));
+$("homeBtn").onclick=()=>showScreen("home");$("backBtn").onclick=()=>showScreen("home");
+$("search").addEventListener("input",renderEntries);$("favFilter").onclick=()=>{favoriteOnly=!favoriteOnly;render()};
+$("sortBy").onchange=()=>{sortBy=$("sortBy").value;localStorage.setItem("wybraneKryteriumSortowania",sortBy);render()};
+$("sortDirection").onclick=()=>{sortAsc=!sortAsc;localStorage.setItem("kierunekSortowaniaRosnaco",String(sortAsc));render()};
+$("viewMode").onchange=()=>{viewMode=$("viewMode").value;localStorage.setItem("wybranyStylWidoku",viewMode);render()};
+$("addBtn").onclick=()=>openForm();$("closeModal").onclick=closeForm;$("cancelModal").onclick=closeForm;$("modalBackdrop").addEventListener("click",e=>{if(e.target===$("modalBackdrop"))closeForm()});$("entryForm").onsubmit=saveForm;
+$("minusCount").onclick=()=>{$("currentCount").value=Math.max(0,(parseInt($("currentCount").value,10)||0)-1)};$("plusCount").onclick=()=>{$("currentCount").value=Math.max(0,(parseInt($("currentCount").value,10)||0)+1)};
+$("imageInput").onchange=()=>{const file=$("imageInput").files?.[0];if(!file)return;if(!file.type.startsWith("image/")){toast("Wybierz plik graficzny.");return}if(file.size>5*1024*1024){toast("Okładka jest większa niż 5 MB. Wybierz mniejszy obraz.");return}const reader=new FileReader();reader.onload=()=>{imageBase64=reader.result;updatePreview()};reader.readAsDataURL(file)};
+$("removeImage").onclick=()=>{imageBase64=null;updatePreview();renderChoices()};
+$("statsToggle").onclick=()=>{statsOpen=!statsOpen;renderStats()};$("exportBtn").onclick=exportCSV;$("importBtn").onclick=()=>$("csvFile").click();$("csvFile").onchange=()=>{const f=$("csvFile").files?.[0];if(f)importCSV(f);$("csvFile").value=""};$("randomBtn").onclick=randomPlanned;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeForm();if((e.metaKey||e.ctrlKey)&&e.key==="Enter"&&$("modalBackdrop").classList.contains("open"))$("entryForm").requestSubmit()});
+showScreen("home");
+})();
+</script>
+</body>
+</html>
