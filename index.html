@@ -538,56 +538,44 @@ async function findAnime(q){
 async function getAnimeDetails(item){
  const mal=Number(item.malId||0),ani=Number(item.anilistId||0);
  if(!mal&&!ani)throw Error("Brak identyfikatora anime");
- // AniList bywa blokowany przez host lub sieć. Dla MAL ID korzystamy z Jikan.
- if(mal)return await getJikanSeriesEpisodes(mal);
- try{return await getAniListSeriesEpisodes(ani)}catch(err){throw Error("AniList: "+err.message+". Powiąż tytuł z wynikiem MyAnimeList (MAL ID), aby użyć Jikan.")}
+ // AniList GraphQL używa POST. MAL ID można wyszukać bez połączenia z Jikan.
+ return getAniListSeriesEpisodes({mal,ani});
 }
-async function getJikanSeriesEpisodes(rootId){
- const queue=[rootId],visited=new Set(),parts=[],warnings=[];let sum=0;
- while(queue.length&&visited.size<30){
-  const id=queue.shift();if(visited.has(id))continue;visited.add(id);
-  const result=await jikanGet("anime/"+id+"/full");const a=result.data;
-  if(!a)continue;
-  const type=String(a.type||"").toLowerCase();
-  if(!["tv","ona"].includes(type))continue;
-  let count=Number(a.episodes)||0;
-  if(a.airing||a.status==="Currently Airing"){
-   // /episodes: odcinki faktycznie opublikowane; nie zakładaj, że planowana liczba już wyszła.
-   count=0;let page=1;
-   while(page<=30){
-    const eps=await jikanGet("anime/"+id+"/episodes?page="+page);
-    for(const ep of eps.data||[])if(!ep.filler&&!ep.recap)count=Math.max(count,Number(ep.mal_id)||0);
-    if(!eps.pagination?.has_next_page)break;
-    page++;
-    await new Promise(r=>setTimeout(r,450));
+async function getAniListSeriesEpisodes(ids){
+ const mediaQuery=`query($id:Int,$idMal:Int){Media(id:$id,idMal:$idMal,type:ANIME){id idMal format status episodes title{romaji english} nextAiringEpisode{episode airingAt} relations{edges{relationType node{id format type}}}}}`;
+ const scheduleQuery=`query($id:Int,$before:Int){Page(page:1,perPage:1){airingSchedules(mediaId:$id,airingAt_lesser:$before,sort:EPISODE_DESC){episode airingAt}}}`;
+ const initial=await anilistQuery(mediaQuery,ids.ani?{id:ids.ani}:{idMal:ids.mal});
+ if(!initial?.Media)throw Error("AniList nie znalazł anime dla wskazanego identyfikatora.");
+ const visited=new Set(),queue=[initial.Media.id],parts=[],warnings=[];let sum=0;
+ const now=Math.floor(Date.now()/1000);
+ while(queue.length&&visited.size<24){
+  const id=queue.shift();if(visited.has(id))continue;
+  const a=id===initial.Media.id?initial.Media:(await anilistQuery(mediaQuery,{id})).Media;
+  if(!a)continue;visited.add(id);
+  // Filmy, OVA, musicale i speciale nie wchodzą do sumy sezonów TV.
+  if(!["TV","TV_SHORT","ONA"].includes(a.format))continue;
+  let count=0;
+  if(a.status==="FINISHED")count=Number(a.episodes)||0;
+  else if(a.status==="RELEASING"){
+   // nextAiringEpisode oznacza kolejny, jeszcze niewyemitowany odcinek.
+   const next=a.nextAiringEpisode;
+   if(next&&next.airingAt>now)count=Math.max(0,Number(next.episode)-1);
+   if(!count){
+    try{const sch=await anilistQuery(scheduleQuery,{id:a.id,before:now+1});count=Number(sch?.Page?.airingSchedules?.[0]?.episode)||0}
+    catch(e){warnings.push("Brak harmonogramu: "+(a.title?.romaji||id))}
    }
   }
-  if(count>0){sum+=count;parts.push((a.title_english||a.title||"Sezon")+": "+count)}
-  else warnings.push("Brak potwierdzonej liczby odcinków: "+(a.title||id));
-  // Relacje prequel/sequel. Pomijamy filmy, OVA i speciale.
-  for(const rel of a.relations||[]){
-   if(!["Prequel","Sequel"].includes(rel.relation))continue;
-   for(const e of rel.entry||[])if(e.type==="anime"&&!visited.has(e.mal_id)&&!queue.includes(e.mal_id))queue.push(e.mal_id);
+  if(count>0){sum+=count;parts.push((a.title?.english||a.title?.romaji||"Sezon")+": "+count)}
+  else warnings.push("Nie udało się potwierdzić wyemitowanych odcinków: "+(a.title?.english||a.title?.romaji||id));
+  for(const edge of a.relations?.edges||[]){
+   if(!["PREQUEL","SEQUEL"].includes(edge.relationType))continue;
+   const n=edge.node;
+   if(n?.type==="ANIME"&&["TV","TV_SHORT","ONA"].includes(n.format)&&!visited.has(n.id)&&!queue.includes(n.id))queue.push(n.id);
   }
-  if(queue.length)await new Promise(r=>setTimeout(r,450));
  }
- if(!sum)throw Error("Jikan nie zwrócił liczby wyemitowanych odcinków. "+warnings.join("; "));
- return {episodes:sum,title:parts.join(" + "),warnings,parts};
-}
-async function getAniListSeriesEpisodes(id){
- const query=`query($id:Int){Media(id:$id,type:ANIME){id idMal format status episodes title{romaji english} relations{edges{relationType node{id format type}}}}}`;
- const visited=new Set(),queue=[id],parts=[],warnings=[];let sum=0;
- while(queue.length&&visited.size<25){
-  const next=queue.shift();const data=await anilistQuery(query,{id:next});const a=data.Media;
-  if(!a||visited.has(a.id))continue;visited.add(a.id);
-  if(!["TV","TV_SHORT","ONA"].includes(a.format))continue;
-  if(a.idMal){const j=await getJikanSeriesEpisodes(a.idMal);return j}
-  const count=a.status==="FINISHED"?Number(a.episodes)||0:0;
-  if(count){sum+=count;parts.push((a.title?.english||a.title?.romaji||"Sezon")+": "+count)}
-  else warnings.push("Brak potwierdzonej liczby: "+(a.title?.romaji||next));
-  for(const edge of a.relations?.edges||[])if(["PREQUEL","SEQUEL"].includes(edge.relationType)&&edge.node?.type==="ANIME"&&["TV","TV_SHORT"].includes(edge.node.format)&&!visited.has(edge.node.id))queue.push(edge.node.id);
- }
- if(!sum)throw Error("Brak potwierdzonej liczby odcinków. "+warnings.join("; "));
+ if(!sum)throw Error("AniList nie podał potwierdzonej liczby wyemitowanych odcinków. "+warnings.join("; "));
+ // Jeśli brakuje danych choćby jednego sezonu, nie nadpisuj dotychczasowej liczby zaniżoną sumą.
+ if(warnings.length)throw Error("Niepełne dane o sezonach — zachowano dotychczasowy licznik. "+warnings.join("; "));
  return {episodes:sum,title:parts.join(" + "),warnings,parts};
 }
 
