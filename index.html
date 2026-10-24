@@ -171,6 +171,13 @@ body:not(.at-home) #collectionScreen.active{display:flex;flex-direction:column;f
 .logo-result img{width:100%;height:85px;object-fit:contain}
 .logo-result small{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
 .logo-result button{font-size:12px}
+/* Wyniki logotypów: grafika nie może wypychać przycisku poza kafelek. */
+.logo-results{grid-auto-rows:minmax(178px,auto);align-items:stretch}
+.logo-result{min-width:0;min-height:178px;display:grid;grid-template-rows:88px minmax(0,1fr) auto;justify-items:center;align-items:center;gap:8px;overflow:hidden}
+.logo-result img{display:block;width:100%;max-width:100%;min-width:0;height:88px;max-height:88px;object-fit:contain;object-position:center}
+.logo-result small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;max-width:100%;max-height:2.8em;line-height:1.4;overflow-wrap:anywhere}
+.logo-result button{display:block;position:relative;z-index:1;align-self:end;width:100%;max-width:150px;min-height:38px;white-space:normal;font-size:12px;padding:7px 5px;flex-shrink:0}
+
 .title-logo{display:block;width:min(100%,180px);max-height:42px;object-fit:contain;object-position:left center;filter:drop-shadow(0 1px 3px #000a)}
 .tile .title-logo{width:100%;height:auto;max-height:35px;object-position:center;filter:drop-shadow(0 1px 4px #000)}
 .entry-title .title-logo{display:inline-block;vertical-align:middle;max-width:175px}
