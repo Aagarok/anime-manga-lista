@@ -184,6 +184,15 @@ body:not(.at-home) #collectionScreen.active{display:flex;flex-direction:column;f
 .logo-review{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .logo-settings-note{font-size:12px;color:var(--muted);line-height:1.5}
 
+/* Trzy warianty tła dla logotypów */
+.tile.tile-has-logo .poster{isolation:isolate}
+.tile.tile-has-logo .poster .logo-cover-backdrop{position:absolute;inset:-12%;width:124%;height:124%;max-width:none;max-height:none;object-fit:cover;filter:blur(13px) brightness(.42) saturate(.85);z-index:0;pointer-events:none}
+.tile.tile-has-logo .poster img.tile-main-logo{position:relative;inset:auto;z-index:1}
+body.logo-bg-black .tile.tile-has-logo .poster{background:#080808}
+body.logo-bg-gradient .tile.tile-has-logo .poster{background:linear-gradient(145deg,#39294f 0%,#1c2742 47%,#0c1019 100%)}
+body.logo-bg-cover .tile.tile-has-logo .poster{background:linear-gradient(145deg,#39294f,#10131c)}
+body.logo-bg-black .tile.tile-has-logo .poster .logo-cover-backdrop,
+body.logo-bg-gradient .tile.tile-has-logo .poster .logo-cover-backdrop{display:none}
 /* Logotyp jako główna zawartość całego kwadratowego kafelka */
 .tile.tile-has-logo{background:#151923}
 .tile.tile-has-logo .poster{position:absolute;inset:0;width:100%;height:100%;background:linear-gradient(145deg,#242b3b,#11151f);display:flex;align-items:center;justify-content:center;padding:20px 13px 43px;box-sizing:border-box}
@@ -191,6 +200,9 @@ body:not(.at-home) #collectionScreen.active{display:flex;flex-direction:column;f
 .tile.tile-has-logo .tile-body{background:linear-gradient(to bottom,transparent,#101219e8 45%,#101219fa);padding-top:18px}
 .tile.tile-has-logo .tile-body .entry-sub{text-align:center;color:#e7e9f2}
 body.light-theme .tile.tile-has-logo{background:#171b26}
+body.logo-bg-black .tile.tile-has-logo .poster{background:#080808}
+body.logo-bg-gradient .tile.tile-has-logo .poster{background:linear-gradient(145deg,#39294f 0%,#1c2742 47%,#0c1019 100%)}
+body.logo-bg-cover .tile.tile-has-logo .poster{background:linear-gradient(145deg,#39294f,#10131c)}
 @media(max-width:420px){.tile.tile-has-logo .poster{padding:14px 9px 37px}}
 </style>
 </head>
@@ -280,6 +292,7 @@ body.light-theme .tile.tile-has-logo{background:#171b26}
     <div class="settings-segments settings-two" id="logoCollectionChoices"><button type="button" data-logo-collection="ANIME">Anime</button><button type="button" data-logo-collection="MANGA">Manga</button></div>
     <div class="logo-settings-row"><select id="logoEntry" aria-label="Wybierz pozycję z kolekcji"></select><input id="logoQuery" type="search" placeholder="Wyszukaj logo tytułu…" aria-label="Szukaj logotypu"><button type="button" id="logoSearch">Szukaj</button></div>
     <div class="logo-settings-row"><button type="button" id="logoClear">Usuń logo wybranej pozycji</button><label><input id="logoShow" type="checkbox" checked> Pokazuj logotypy na listach</label></div>
+    <p>Wygląd tła kafelków z logotypem</p><div class="settings-segments" id="logoBackgroundChoices"><button type="button" data-logo-bg="cover">Okładka w tle</button><button type="button" data-logo-bg="black">Czarne tło</button><button type="button" data-logo-bg="gradient">Gradient</button></div><p class="settings-note">Okładka w tle będzie rozmyta i przyciemniona. Jeśli pozycja nie ma okładki, użyjemy gradientu.</p>
     <div id="logoInfo" class="logo-settings-note" aria-live="polite">Wybierz tytuł i wyszukaj logotyp.</div><div id="logoResults" class="logo-results"></div>
     <div class="logo-review"><button type="button" id="logoBatch">Wyszukaj logotypy dla kolekcji</button><button type="button" id="logoNext" hidden>Następny tytuł →</button><button type="button" id="logoStop" hidden>Zakończ przegląd</button></div>
     <p class="logo-settings-note">Po imporcie CSV możesz rozpocząć przegląd nowych tytułów. Nic nie zostanie przypisane bez zatwierdzenia. Możesz też wgrać własny logotyp PNG/WebP.</p>
@@ -346,7 +359,7 @@ function renderEntries(){
  if(viewMode==="list"){
   host.innerHTML=`<div class="list">${arr.map(e=>`<article class="list-row" data-edit="${e.id}" title="Dwuklik, aby edytować">${thumb(e)}<div class="entry-info"><div class="entry-title">${logoTitle(e)} ${e.czyUlubione?'<span class="heart">♥</span>':""}</div><div class="entry-sub">${counter}: ${Number(e.aktualnyLicznik)||0}${e.maxLicznik!=null&&e.maxLicznik!==""?` / ${Number(e.maxLicznik)}`:""}</div></div><div class="row-actions"><button class="icon-btn" data-action="minus" data-id="${e.id}" title="-1">−</button><button class="icon-btn" data-action="plus" data-id="${e.id}" title="+1">＋</button><button class="icon-btn" data-action="fav" data-id="${e.id}" title="Ulubione">${e.czyUlubione?"♥":"♡"}</button><button class="icon-btn danger" data-action="delete" data-id="${e.id}" title="Usuń">⌫</button><button class="icon-btn" data-action="edit" data-id="${e.id}" title="Edytuj">✎</button></div></article>`).join("")}</div>`;
  }else{
-  host.innerHTML=`<div class="grid">${arr.map(e=>`<article class="tile ${e.czyUlubione?"favorite":""} ${localStorage.getItem("mojaListaPokazLogo")!=="false"&&safeLogoUrl(e.logoUrl)?"tile-has-logo":""}" data-edit="${e.id}" title="Dwuklik, aby edytować"><div class="poster" style="--accent:${COLORS[e.kolor]||COLORS.Blue}">${localStorage.getItem("mojaListaPokazLogo")!=="false"&&safeLogoUrl(e.logoUrl)?`<img class="tile-main-logo" src="${safeLogoUrl(e.logoUrl)}" alt="${escapeHtml(e.tytul)}">`:(e.zdjecieBase64?`<img src="${e.zdjecieBase64}" alt="">`:(ICONS[e.ikona]||"★"))}</div><div class="poster-actions"><button data-action="delete" data-id="${e.id}" title="Usuń" aria-label="Usuń"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v5M14 11v5"/></svg></button><button data-action="fav" data-id="${e.id}" class="${e.czyUlubione?"heart":""}" title="Ulubione" aria-label="Ulubione">${e.czyUlubione?"♥":"♡"}</button></div><div class="tile-actions"><button data-action="minus" data-id="${e.id}" title="Zmniejsz postęp" aria-label="Zmniejsz postęp">−</button><button data-action="plus" data-id="${e.id}" title="Zwiększ postęp" aria-label="Zwiększ postęp">+</button></div><div class="tile-body">${localStorage.getItem("mojaListaPokazLogo")!=="false"&&safeLogoUrl(e.logoUrl)?"":`<div class="tile-title" title="${escapeHtml(e.tytul)}">${escapeHtml(e.tytul)}</div>`}<div class="entry-sub">${counter}: ${Number(e.aktualnyLicznik)||0}${e.maxLicznik!=null&&e.maxLicznik!==""?` / ${Number(e.maxLicznik)}`:""}</div></div></article>`).join("")}</div>`;
+  host.innerHTML=`<div class="grid">${arr.map(e=>`<article class="tile ${e.czyUlubione?"favorite":""} ${localStorage.getItem("mojaListaPokazLogo")!=="false"&&safeLogoUrl(e.logoUrl)?"tile-has-logo":""}" data-edit="${e.id}" title="Dwuklik, aby edytować"><div class="poster" style="--accent:${COLORS[e.kolor]||COLORS.Blue}">${localStorage.getItem("mojaListaPokazLogo")!=="false"&&safeLogoUrl(e.logoUrl)?`${e.zdjecieBase64?`<img class="logo-cover-backdrop" src="${e.zdjecieBase64}" alt="" aria-hidden="true">`:""}<img class="tile-main-logo" src="${safeLogoUrl(e.logoUrl)}" alt="${escapeHtml(e.tytul)}">`:(e.zdjecieBase64?`<img src="${e.zdjecieBase64}" alt="">`:(ICONS[e.ikona]||"★"))}</div><div class="poster-actions"><button data-action="delete" data-id="${e.id}" title="Usuń" aria-label="Usuń"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v5M14 11v5"/></svg></button><button data-action="fav" data-id="${e.id}" class="${e.czyUlubione?"heart":""}" title="Ulubione" aria-label="Ulubione">${e.czyUlubione?"♥":"♡"}</button></div><div class="tile-actions"><button data-action="minus" data-id="${e.id}" title="Zmniejsz postęp" aria-label="Zmniejsz postęp">−</button><button data-action="plus" data-id="${e.id}" title="Zwiększ postęp" aria-label="Zwiększ postęp">+</button></div><div class="tile-body">${localStorage.getItem("mojaListaPokazLogo")!=="false"&&safeLogoUrl(e.logoUrl)?"":`<div class="tile-title" title="${escapeHtml(e.tytul)}">${escapeHtml(e.tytul)}</div>`}<div class="entry-sub">${counter}: ${Number(e.aktualnyLicznik)||0}${e.maxLicznik!=null&&e.maxLicznik!==""?` / ${Number(e.maxLicznik)}`:""}</div></div></article>`).join("")}</div>`;
  }
  host.querySelectorAll("[data-action]").forEach(b=>b.addEventListener("click",ev=>{ev.stopPropagation();const id=b.dataset.id;switch(b.dataset.action){case"minus":changeCount(id,-1);break;case"plus":changeCount(id,1);break;case"fav":toggleFavorite(id);break;case"delete":deleteEntry(id);break;case"edit":openForm(id);break}}));
  host.querySelectorAll("[data-edit]").forEach(el=>{let timer=null;el.addEventListener("dblclick",()=>openForm(el.dataset.edit));el.addEventListener("click",ev=>{if(ev.target.closest("button"))return;clearTimeout(timer);timer=setTimeout(()=>{},250)})});
@@ -461,7 +474,7 @@ $("logoNext").onclick=()=>nextLogoReview();$("logoStop").onclick=()=>{logoReview
 $("logoUploadSave").onclick=async()=>{const file=$("logoUpload").files?.[0];if(!file||!/^image\/(png|webp|jpeg)$/.test(file.type)||file.size>700000){toast("Wybierz PNG/WebP/JPG do 700 KB.");return}const reader=new FileReader();reader.onload=()=>{updateLogoForSelected(reader.result);$("logoUpload").value=""};reader.readAsDataURL(file)};
 
 function setting(key,fallback){return localStorage.getItem(key)??fallback}
-function applyCollectionSettings(){const size=setting("mojaListaRozmiarKafelkow","medium");["small","medium","large"].forEach(v=>document.body.classList.toggle(`tile-${v}`,v===size));document.body.classList.toggle("hide-tile-counter",setting("mojaListaPokazLicznik","true")==="false");document.body.classList.toggle("hide-tile-controls",setting("mojaListaPokazPrzyciski","true")==="false");document.body.classList.toggle("cover-contain",setting("mojaListaDopasowanieOkladek","cover")==="contain")}
+function applyCollectionSettings(){const bg=setting("mojaListaTloLogotypow","gradient");["cover","black","gradient"].forEach(v=>document.body.classList.toggle(`logo-bg-${v}`,bg===v));const size=setting("mojaListaRozmiarKafelkow","medium");["small","medium","large"].forEach(v=>document.body.classList.toggle(`tile-${v}`,v===size));document.body.classList.toggle("hide-tile-counter",setting("mojaListaPokazLicznik","true")==="false");document.body.classList.toggle("hide-tile-controls",setting("mojaListaPokazPrzyciski","true")==="false");document.body.classList.toggle("cover-contain",setting("mojaListaDopasowanieOkladek","cover")==="contain")}
 function selectSetting(group,attribute,value){document.querySelectorAll(`[${attribute}]`).forEach(b=>b.classList.toggle("active",b.getAttribute(attribute)===value))}
 function refreshSortSettings(){const c=getSortConfig(settingsState.sortCollection);selectSetting("", "data-sort-collection",settingsState.sortCollection);$("defaultSortSetting").value=c.by;selectSetting("","data-sort-order",c.asc?"asc":"desc")}
 
@@ -470,7 +483,7 @@ function refreshSettings(){
  document.querySelectorAll("[data-theme]").forEach(b=>b.classList.toggle("active",b.dataset.theme===theme));
  document.querySelectorAll("[data-data]").forEach(b=>b.classList.toggle("active",b.dataset.data===settingsState.collection));
  $("confirmDeleteSetting").checked=localStorage.getItem("mojaListaPotwierdzajUsuwanie")!=="false";
- selectSetting("","data-tile-size",setting("mojaListaRozmiarKafelkow","medium"));selectSetting("","data-default-view",setting("mojaListaDomyslnyWidok","grid"));selectSetting("","data-cover-fit",setting("mojaListaDopasowanieOkladek","cover"));
+ selectSetting("","data-logo-bg",setting("mojaListaTloLogotypow","gradient"));selectSetting("","data-tile-size",setting("mojaListaRozmiarKafelkow","medium"));selectSetting("","data-default-view",setting("mojaListaDomyslnyWidok","grid"));selectSetting("","data-cover-fit",setting("mojaListaDopasowanieOkladek","cover"));
  $("showCounterSetting").checked=setting("mojaListaPokazLicznik","true")!=="false";$("showProgressSetting").checked=setting("mojaListaPokazPrzyciski","true")!=="false";$("shortcutsSetting").checked=setting("mojaListaSkroty","true")!=="false";refreshSortSettings();
  const anime=JSON.parse(localStorage.getItem(KEYS.ANIME)||"[]"),manga=JSON.parse(localStorage.getItem(KEYS.MANGA)||"[]");
  $("animeTotal").textContent=`Anime: ${Array.isArray(anime)?anime.length:0}`;$("mangaTotal").textContent=`Manga: ${Array.isArray(manga)?manga.length:0}`;
@@ -488,6 +501,7 @@ function bindChoices(attr,key,callback){document.querySelectorAll(`[${attr}]`).f
 bindChoices("data-tile-size","mojaListaRozmiarKafelkow",()=>{applyCollectionSettings();render()});
 bindChoices("data-default-view","mojaListaDomyslnyWidok",()=>{});
 bindChoices("data-cover-fit","mojaListaDopasowanieOkladek",()=>{applyCollectionSettings();render()});
+bindChoices("data-logo-bg","mojaListaTloLogotypow",()=>{applyCollectionSettings();render()});
 [["showCounterSetting","mojaListaPokazLicznik"],["showProgressSetting","mojaListaPokazPrzyciski"],["shortcutsSetting","mojaListaSkroty"]].forEach(([id,key])=>{$(id).onchange=e=>{localStorage.setItem(key,String(e.target.checked));applyCollectionSettings()}});
 document.querySelectorAll("[data-sort-collection]").forEach(b=>b.onclick=()=>{settingsState.sortCollection=b.dataset.sortCollection;refreshSettings()});
 function changeSettingsSort(by,asc){localStorage.setItem(sortConfigKey(settingsState.sortCollection),JSON.stringify({by,asc}));if(section===settingsState.sortCollection){sortBy=by;sortAsc=asc;render()}refreshSettings()}
