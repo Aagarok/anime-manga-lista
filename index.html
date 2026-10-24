@@ -339,6 +339,53 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none}
   }
 }
 
+/* Poprawki przycisków na kafelkach — nie zmieniają ich rozmiaru */
+.tile .poster-actions button[data-action="delete"] {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0;
+  color: #fff;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.tile .poster-actions button[data-action="delete"]::before {
+  content: "▤";
+  font-size: 23px;
+  line-height: 1;
+}
+
+.tile .poster-actions .favorite-btn {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.tile .tile-actions button[data-action="minus"],
+.tile .tile-actions button[data-action="plus"] {
+  font-size: 0;
+  min-width: 36px;
+  padding: 7px;
+}
+
+.tile .tile-actions button[data-action="minus"]::before {
+  content: "−";
+  font-size: 21px;
+}
+
+.tile .tile-actions button[data-action="plus"]::before {
+  content: "+";
+  font-size: 21px;
+}
+
+.tile .tile-actions button[data-action="edit"] {
+  display: none;
+}
+
 
 </style>
 </head>
