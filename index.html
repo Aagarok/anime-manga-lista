@@ -48,6 +48,13 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;bo
 .favorite-toggle input:checked~.favorite-heart{color:#ff657e;transform:scale(1.08)}
 .favorite-toggle input:checked~.favorite-switch{background:#e95377}
 .favorite-toggle input:checked~.favorite-switch:before{transform:translateX(18px)}
+
+/* Status wybierany jednym kliknięciem, bez listy rozwijanej */
+.status-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.status-option{min-height:42px;text-align:left;padding:10px 12px;background:#202431;border:1px solid #3a4052;border-radius:10px;font-size:13px;font-weight:700;white-space:normal}
+.status-option.selected{background:color-mix(in srgb,var(--status-color) 16%,#202431);border-color:var(--status-color);color:var(--status-color);box-shadow:inset 3px 0 var(--status-color)}
+.status-option:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media(max-width:440px){.status-choices{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -100,7 +107,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;bo
         <div class="form-field wide"><label for="titleInput">NAZWA</label><input id="titleInput" required maxlength="200" placeholder="Wpisz tytuł…"></div>
         <div class="form-field"><label id="counterLabel" for="currentCount">ODCINKI</label><div class="counter"><button type="button" id="minusCount">−</button><input id="currentCount" type="number" min="0" step="1" value="0"><button type="button" id="plusCount">＋</button></div></div>
         <div class="form-field"><label for="maxCount">MAKSYMALNA LICZBA (OPCJONALNIE)</label><input id="maxCount" type="number" min="1" step="1" placeholder="Brak limitu"></div>
-        <div class="form-field wide"><label for="statusInput">STATUS</label><select id="statusInput"></select></div>
+        <div class="form-field wide"><label id="statusLabel">STATUS</label><select id="statusInput" hidden aria-hidden="true" tabindex="-1"></select><div id="statusChoices" class="status-choices" role="group" aria-labelledby="statusLabel"></div></div>
         <div class="form-field wide"><label class="favorite-toggle"><input id="favoriteInput" type="checkbox"><span class="favorite-heart" aria-hidden="true">♥</span><span class="favorite-text">Dodaj do ulubionych</span><span class="favorite-switch" aria-hidden="true"></span></label></div>
         <div class="form-field wide"><label>OKŁADKA / ZDJĘCIE</label><div class="preview"><div id="previewThumb" class="thumb">▣</div><div><input id="imageInput" type="file" accept="image/*"><button type="button" id="removeImage" class="quiet danger">Usuń zdjęcie</button></div></div></div>
         <div class="form-field wide" id="iconField"><label>IKONA ZASTĘPCZA</label><div id="iconChoices" class="choice-row"></div><label>KOLOR</label><div id="colorChoices" class="choice-row"></div></div>
@@ -174,7 +181,12 @@ function renderStats(){
 function render(){renderTabs();renderEntries();renderStats();$("sortBy").value=sortBy;$("sortDirection").textContent=sortAsc?"↑":"↓";$("viewMode").value=viewMode;$("randomBtn").style.display=activeStatus==="Planowane"?"inline-block":"none";$("favFilter").classList.toggle("heart",favoriteOnly);$("favFilter").textContent=favoriteOnly?"♥":"♡"}
 function openForm(id=null){
  editingId=id;const e=id?entries.find(x=>x.id===id):null;editDate=e?.dataDodania||new Date().toISOString();imageBase64=e?.zdjecieBase64||null;chosenIcon=e?.ikona|| (section==="ANIME"?"tv.fill":"book.fill");chosenColor=e?.kolor||(section==="ANIME"?"Red":"Blue");
- $("modalTitle").textContent=e?"Edytuj pozycję":"Dodaj nową pozycję";$("titleInput").value=e?.tytul||"";$("currentCount").value=e?.aktualnyLicznik??0;$("maxCount").value=e?.maxLicznik??"";$("statusInput").innerHTML=STATUSES.map(s=>`<option>${escapeHtml(s)}</option>`).join("");$("statusInput").value=normStatus(e?.statusKarty||"Planowane");$("favoriteInput").checked=!!e?.czyUlubione;$("imageInput").value="";renderChoices();updatePreview();$("modalBackdrop").classList.add("open");$("titleInput").focus();
+ $("modalTitle").textContent=e?"Edytuj pozycję":"Dodaj nową pozycję";$("titleInput").value=e?.tytul||"";$("currentCount").value=e?.aktualnyLicznik??0;$("maxCount").value=e?.maxLicznik??"";$("statusInput").innerHTML=STATUSES.map(s=>`<option>${escapeHtml(s)}</option>`).join("");$("statusInput").value=normStatus(e?.statusKarty||"Planowane");renderStatusChoices();$("favoriteInput").checked=!!e?.czyUlubione;$("imageInput").value="";renderChoices();updatePreview();$("modalBackdrop").classList.add("open");$("titleInput").focus();
+}
+function renderStatusChoices(){
+ const current=$("statusInput").value;
+ $("statusChoices").innerHTML=STATUSES.map(s=>`<button type="button" class="status-option ${current===s?"selected":""}" data-status-choice="${escapeHtml(s)}" style="--status-color:${STATUS_COLORS[s]}" aria-pressed="${current===s}">${escapeHtml(s)}</button>`).join("");
+ $("statusChoices").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{$("statusInput").value=b.dataset.statusChoice;renderStatusChoices()}));
 }
 function renderChoices(){
  $("iconChoices").innerHTML=Object.entries(ICONS).map(([k,v])=>`<button type="button" class="choice ${chosenIcon===k?"selected":""}" data-icon="${k}">${v}</button>`).join("");
