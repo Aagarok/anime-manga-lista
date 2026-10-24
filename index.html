@@ -204,6 +204,50 @@ body.logo-bg-black .tile.tile-has-logo .poster{background:#080808}
 body.logo-bg-gradient .tile.tile-has-logo .poster{background:linear-gradient(145deg,#39294f 0%,#1c2742 47%,#0c1019 100%)}
 body.logo-bg-cover .tile.tile-has-logo .poster{background:linear-gradient(145deg,#39294f,#10131c)}
 @media(max-width:420px){.tile.tile-has-logo .poster{padding:14px 9px 37px}}
+
+/* Kategorie ustawień – panel główny i osobne podstrony */
+.settings-content{display:block;min-height:0}
+.settings-intro{margin:0 0 17px;color:var(--muted);font-size:14px}
+.settings-category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.settings-category{position:relative;min-width:0;min-height:135px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:8px;text-align:left;padding:18px 20px;border-radius:17px;border:1px solid var(--line);background:var(--panel2);color:var(--text);cursor:pointer;transition:border-color .18s,transform .18s,background .18s}
+.settings-category:hover{border-color:#5793ff;transform:translateY(-2px)}
+.settings-category-icon{font-size:28px;line-height:1;color:#84aaff}
+.settings-category strong{font-size:17px}.settings-category small{font-size:12px;color:var(--muted)}
+.settings-category-arrow{position:absolute;right:17px;top:calc(50% - 16px);font-size:27px;color:var(--muted)}
+.settings-page[hidden],.settings-home[hidden]{display:none!important}
+.settings-page{display:grid;gap:14px}
+.settings-page-top{display:flex;align-items:center;gap:15px;margin-bottom:4px}
+.settings-page-top h3{font-size:19px;margin:0}
+.settings-back{padding:10px 13px;white-space:nowrap;font-weight:700}
+.settings-page .settings-section{min-width:0}
+.settings-modal{width:min(820px,100%)}
+@media(max-width:540px){.settings-category-grid{gap:9px}.settings-category{min-height:120px;padding:12px}.settings-category strong{font-size:15px}.settings-category-arrow{right:8px}.settings-page-top{gap:9px}.settings-page-top h3{font-size:16px}}
+
+/* Rozróżnienie kategorii ustawień: autorskie ikony, barwy i subtelne akcenty. */
+.settings-category{overflow:hidden;isolation:isolate;padding-top:17px;padding-bottom:17px;gap:9px}
+.settings-category::before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,var(--cat-wash),transparent 72%);opacity:.72;pointer-events:none;z-index:-1}
+.settings-category::after{content:"";position:absolute;left:0;top:19px;bottom:19px;width:3px;border-radius:0 5px 5px 0;background:var(--cat-accent);opacity:.8}
+.settings-category-icon{display:grid;place-items:center;width:51px;height:51px;border-radius:15px;background:var(--cat-badge);color:var(--cat-accent);border:1px solid var(--cat-border);flex-shrink:0;transition:transform .2s ease}
+.settings-category:hover .settings-category-icon{transform:translateY(-2px) scale(1.05)}
+.settings-category strong{font-size:17px;letter-spacing:.1px}
+.settings-category-arrow{font-size:24px;opacity:.75;transition:transform .2s}
+.settings-category:hover .settings-category-arrow{transform:translateX(3px);color:var(--cat-accent)}
+.settings-category[data-settings-page="appearance"]{--cat-accent:#b59aff;--cat-badge:rgba(166,128,255,.16);--cat-border:rgba(181,154,255,.25);--cat-wash:rgba(157,112,255,.12)}
+.settings-category[data-settings-page="logos"]{--cat-accent:#f5b85e;--cat-badge:rgba(245,184,94,.15);--cat-border:rgba(245,184,94,.28);--cat-wash:rgba(245,184,94,.11)}
+.settings-category[data-settings-page="data"]{--cat-accent:#67baff;--cat-badge:rgba(103,186,255,.14);--cat-border:rgba(103,186,255,.27);--cat-wash:rgba(103,186,255,.1)}
+.settings-category[data-settings-page="collection"]{--cat-accent:#68d7ac;--cat-badge:rgba(104,215,172,.14);--cat-border:rgba(104,215,172,.27);--cat-wash:rgba(104,215,172,.1)}
+.settings-category[data-settings-page="other"]{--cat-accent:#ef92ae;--cat-badge:rgba(239,146,174,.14);--cat-border:rgba(239,146,174,.27);--cat-wash:rgba(239,146,174,.1)}
+@media(max-width:540px){.settings-category-icon{width:43px;height:43px;border-radius:12px}.settings-category-icon svg{width:24px;height:24px}.settings-category{gap:7px}}
+
+/* Aktualizacja odcinków */
+.episode-panel{grid-column:1/-1;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:13px;display:grid;gap:9px}
+.episode-panel .episode-line{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.episode-panel small,.episode-note{color:var(--muted);font-size:12px;line-height:1.5}
+.episode-result{display:flex;align-items:center;gap:10px;padding:8px;border:1px solid var(--line);border-radius:10px;margin-top:6px}
+.episode-result img{width:40px;height:56px;object-fit:cover;border-radius:5px}
+.episode-result span{flex:1;min-width:0;font-size:13px}
+.episode-result button{white-space:nowrap}
+.episode-panel input[type=search]{flex:1;min-width:160px}
 </style>
 </head>
 <body class="at-home">
@@ -258,6 +302,7 @@ body.logo-bg-cover .tile.tile-has-logo .poster{background:linear-gradient(145deg
         <div class="form-field wide"><div id="editLogoPreview"></div><label for="titleInput">NAZWA</label><input id="titleInput" required maxlength="200" placeholder="Wpisz tytuł…"></div>
         <div class="form-field"><label id="counterLabel" for="currentCount">ODCINKI</label><div class="counter"><button type="button" id="minusCount">−</button><input id="currentCount" type="number" min="0" step="1" value="0"><button type="button" id="plusCount">＋</button></div></div>
         <div class="form-field"><label for="maxCount">MAKSYMALNA LICZBA (OPCJONALNIE)</label><input id="maxCount" type="number" min="1" step="1" placeholder="Brak limitu"></div>
+        <div class="episode-panel" id="episodePanel" hidden><strong>↻ Automatyczna liczba odcinków (MyAnimeList)</strong><small>Powiąż anime z właściwym tytułem. Aplikacja będzie odświeżać liczbę wyemitowanych odcinków podczas otwierania kolekcji (maksymalnie raz dziennie). Twój obejrzany postęp pozostanie bez zmian.</small><div class="episode-line"><input id="episodeSearchInput" type="search" placeholder="Tytuł anime do wyszukania…"><button id="episodeSearchBtn" type="button">Szukaj</button></div><div id="episodeLinkInfo" class="episode-note"></div><div id="episodeResults"></div><div class="episode-line"><button id="episodeUnlink" type="button">Odłącz tytuł</button></div></div>
         <div class="form-field wide"><label id="statusLabel">STATUS</label><select id="statusInput" hidden aria-hidden="true" tabindex="-1"></select><div id="statusChoices" class="status-choices" role="group" aria-labelledby="statusLabel"></div></div>
         <div class="media-settings wide">
           <div class="media-settings-main">
@@ -275,19 +320,13 @@ body.logo-bg-cover .tile.tile-has-logo .poster{background:linear-gradient(145deg
 <div class="modal-backdrop" id="settingsBackdrop">
  <section class="modal settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
   <div class="modal-head"><h2 id="settingsTitle">⚙ Ustawienia</h2><div class="spacer"></div><button id="closeSettings" aria-label="Zamknij ustawienia">✕</button></div>
-  <div class="settings-content">
-   <div class="settings-section"><h3>◐ Wygląd aplikacji</h3><p>Wybierz motyw strony.</p><div class="settings-segments" id="themeChoices"><button data-theme="dark" type="button">☾ Ciemny</button><button data-theme="light" type="button">☀ Jasny</button><button data-theme="system" type="button">◐ Systemowy</button></div></div>
-   <div class="settings-section"><h3>▦ Wygląd kolekcji</h3>
+  <div class="settings-content"><div class="settings-home" id="settingsHome"><p class="settings-intro">Wybierz kategorię, aby zmienić jej ustawienia.</p><div class="settings-category-grid"><button type="button" class="settings-category" data-settings-page="appearance"><span class="settings-category-icon"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M12 3a9 9 0 0 1 0 18"/></svg></span><strong>Wygląd</strong><small>Motyw, kafelki i okładki</small><span class="settings-category-arrow">›</span></button><button type="button" class="settings-category" data-settings-page="logos"><span class="settings-category-icon"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/></svg></span><strong>Logotypy</strong><small>Wyszukiwarka i tła</small><span class="settings-category-arrow">›</span></button><button type="button" class="settings-category" data-settings-page="data"><span class="settings-category-icon"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span><strong>Dane i kopie</strong><small>CSV, JSON, informacje</small><span class="settings-category-arrow">›</span></button><button type="button" class="settings-category" data-settings-page="collection"><span class="settings-category-icon"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="m3 6 1 1 2-2M3 12l1 1 2-2M3 18l1 1 2-2"/></svg></span><strong>Kolekcja</strong><small>Sortowanie anime i mangi</small><span class="settings-category-arrow">›</span></button><button type="button" class="settings-category" data-settings-page="other"><span class="settings-category-icon"><svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.86 1.86-.06-.06A1.7 1.7 0 0 0 16 18.4a1.7 1.7 0 0 0-1 1.56V21h-6v-1.04A1.7 1.7 0 0 0 8 18.4a1.7 1.7 0 0 0-1.88.34l-.06.06-1.86-1.86.06-.06A1.7 1.7 0 0 0 4.6 15 1.7 1.7 0 0 0 3 14H2v-4h1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.34-1.88L4.2 7.06 6.06 5.2l.06.06A1.7 1.7 0 0 0 8 5.6 1.7 1.7 0 0 0 9 4.04V3h6v1.04a1.7 1.7 0 0 0 1 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.86 1.86-.06.06A1.7 1.7 0 0 0 19.4 9 1.7 1.7 0 0 0 21 10h1v4h-1a1.7 1.7 0 0 0-1.6 1Z"/></svg></span><strong>Pozostałe</strong><small>Bezpieczeństwo i skróty</small><span class="settings-category-arrow">›</span></button></div></div><div class="settings-page" data-settings-panel="appearance" hidden><div class="settings-page-top"><button type="button" class="settings-back">← Kategorie</button><h3>◐ Wygląd</h3></div><div class="settings-section"><h3>◐ Wygląd aplikacji</h3><p>Wybierz motyw strony.</p><div class="settings-segments" id="themeChoices"><button data-theme="dark" type="button">☾ Ciemny</button><button data-theme="light" type="button">☀ Jasny</button><button data-theme="system" type="button">◐ Systemowy</button></div></div><div class="settings-section"><h3>▦ Wygląd kolekcji</h3>
     <p>Wielkość kafelków</p><div class="settings-segments" id="tileSizeChoices"><button type="button" data-tile-size="small">Małe</button><button type="button" data-tile-size="medium">Średnie</button><button type="button" data-tile-size="large">Duże</button></div>
     <label class="settings-check"><span><strong>Pokazuj liczniki</strong><small>Liczba odcinków lub rozdziałów na kafelku</small></span><input id="showCounterSetting" type="checkbox"></label>
     <label class="settings-check"><span><strong>Pokazuj przyciski + i −</strong><small>Zmiana postępu bez otwierania edycji</small></span><input id="showProgressSetting" type="checkbox"></label>
     <p>Domyślny widok po otwarciu kolekcji</p><div class="settings-segments settings-two" id="defaultViewChoices"><button type="button" data-default-view="grid">▦ Kafelki</button><button type="button" data-default-view="list">☷ Lista</button></div>
     <p>Sposób wyświetlania okładki</p><div class="settings-segments settings-two" id="coverFitChoices"><button type="button" data-cover-fit="cover">Wypełnij kafelek</button><button type="button" data-cover-fit="contain">Pokaż całą</button></div>
-   </div>
-   <div class="settings-section"><h3>↕ Sortowanie</h3><p>Osobne ustawienia dla anime i mangi. Ulubione nadal są wyświetlane jako pierwsze.</p><div class="settings-segments settings-two" id="sortCollectionChoices"><button type="button" data-sort-collection="ANIME">Anime</button><button type="button" data-sort-collection="MANGA">Manga</button></div><label class="settings-select-label">Sortuj według <select id="defaultSortSetting"><option value="date">Daty dodania</option><option value="alpha">Alfabetycznie</option><option value="progress">Postępu</option><option value="updated">Ostatniej aktualizacji</option></select></label><div class="settings-segments settings-two" id="sortOrderChoices"><button type="button" data-sort-order="asc">Rosnąco ↑</button><button type="button" data-sort-order="desc">Malejąco ↓</button></div></div>
-   <div class="settings-section"><h3>▤ Dane i kopie zapasowe</h3><p>Wybierz kolekcję do importu lub eksportu CSV.</p><div class="settings-segments" id="dataChoices"><button data-data="ANIME" type="button">Anime</button><button data-data="MANGA" type="button">Manga</button></div><div class="settings-file-actions"><button id="settingsImport" type="button">⇧ Importuj CSV</button><button id="settingsExport" type="button">⇩ Eksportuj CSV</button></div><p class="settings-note">Import dodaje nowe tytuły i pomija duplikaty. Nie usuwa istniejących wpisów.</p><button id="settingsBackup" type="button" class="settings-backup">⇩ Pobierz pełną kopię anime i mangi (JSON)</button><p class="settings-note">Pełna kopia zawiera także okładki, daty i pozostałe szczegóły, których zwykły CSV nie przechowuje.</p><button id="settingsRestore" type="button" class="settings-restore">↥ Przywróć pełną kopię (JSON)</button><input id="backupFile" type="file" accept=".json,application/json" hidden><p class="settings-note">Przywracanie zastąpi obie obecne kolekcje. Przed zmianą pojawi się potwierdzenie.</p></div>
-
-   <div class="settings-section" id="logoSettings"><h3>✦ Logotypy tytułów</h3>
+   </div></div><div class="settings-page" data-settings-panel="logos" hidden><div class="settings-page-top"><button type="button" class="settings-back">← Kategorie</button><h3>✦ Logotypy</h3></div><div class="settings-section" id="logoSettings"><h3>✦ Logotypy tytułów</h3>
     <p>Wyszukuj oryginalne napisy tytułów (nie okładki). Wyniki pochodzą z Wikimedia Commons — nie każdy tytuł ma dostępny logotyp.</p>
     <div class="settings-segments settings-two" id="logoCollectionChoices"><button type="button" data-logo-collection="ANIME">Anime</button><button type="button" data-logo-collection="MANGA">Manga</button></div>
     <div class="logo-settings-row"><select id="logoEntry" aria-label="Wybierz pozycję z kolekcji"></select><input id="logoQuery" type="search" placeholder="Wyszukaj logo tytułu…" aria-label="Szukaj logotypu"><button type="button" id="logoSearch">Szukaj</button></div>
@@ -297,11 +336,7 @@ body.logo-bg-cover .tile.tile-has-logo .poster{background:linear-gradient(145deg
     <div class="logo-review"><button type="button" id="logoBatch">Wyszukaj logotypy dla kolekcji</button><button type="button" id="logoNext" hidden>Następny tytuł →</button><button type="button" id="logoStop" hidden>Zakończ przegląd</button></div>
     <p class="logo-settings-note">Po imporcie CSV możesz rozpocząć przegląd nowych tytułów. Nic nie zostanie przypisane bez zatwierdzenia. Możesz też wgrać własny logotyp PNG/WebP.</p>
     <div class="logo-settings-row"><input id="logoUpload" type="file" accept="image/png,image/webp,image/jpeg"><button type="button" id="logoUploadSave">Przypisz wgrany obraz</button></div>
-   </div>
-   <div class="settings-section"><h3>♧ Bezpieczeństwo</h3><label class="settings-check"><span><strong>Potwierdzaj usuwanie</strong><small>Zapytaj przed usunięciem anime lub mangi</small></span><input id="confirmDeleteSetting" type="checkbox"></label></div>
-   <div class="settings-section"><h3>⌨ Skróty klawiaturowe</h3><label class="settings-check"><span><strong>Włącz skróty</strong><small>Esc – zamknij okno, / – wyszukaj, N – dodaj pozycję. Ctrl/Cmd + Enter zapisuje formularz.</small></span><input id="shortcutsSetting" type="checkbox"></label></div>
-   <div class="settings-section"><h3>◫ Twoje dane</h3><div class="settings-summary"><span id="animeTotal">Anime: 0</span><span id="mangaTotal">Manga: 0</span><span id="storageTotal">Zajęte miejsce: —</span></div><p class="settings-note">Dane pozostają zapisane lokalnie w tej przeglądarce.</p></div>
-  </div>
+   </div></div><div class="settings-page" data-settings-panel="data" hidden><div class="settings-page-top"><button type="button" class="settings-back">← Kategorie</button><h3>▤ Dane i kopie</h3></div><div class="settings-section"><h3>▤ Dane i kopie zapasowe</h3><p>Wybierz kolekcję do importu lub eksportu CSV.</p><div class="settings-segments" id="dataChoices"><button data-data="ANIME" type="button">Anime</button><button data-data="MANGA" type="button">Manga</button></div><div class="settings-file-actions"><button id="settingsImport" type="button">⇧ Importuj CSV</button><button id="settingsExport" type="button">⇩ Eksportuj CSV</button></div><p class="settings-note">Import dodaje nowe tytuły i pomija duplikaty. Nie usuwa istniejących wpisów.</p><button id="settingsBackup" type="button" class="settings-backup">⇩ Pobierz pełną kopię anime i mangi (JSON)</button><p class="settings-note">Pełna kopia zawiera także okładki, daty i pozostałe szczegóły, których zwykły CSV nie przechowuje.</p><button id="settingsRestore" type="button" class="settings-restore">↥ Przywróć pełną kopię (JSON)</button><input id="backupFile" type="file" accept=".json,application/json" hidden><p class="settings-note">Przywracanie zastąpi obie obecne kolekcje. Przed zmianą pojawi się potwierdzenie.</p></div><div class="settings-section"><h3>◫ Twoje dane</h3><div class="settings-summary"><span id="animeTotal">Anime: 0</span><span id="mangaTotal">Manga: 0</span><span id="storageTotal">Zajęte miejsce: —</span></div><p class="settings-note">Dane pozostają zapisane lokalnie w tej przeglądarce.</p></div></div><div class="settings-page" data-settings-panel="collection" hidden><div class="settings-page-top"><button type="button" class="settings-back">← Kategorie</button><h3>↕ Kolekcja</h3></div><div class="settings-section"><h3>↻ Aktualizacja odcinków anime</h3><p>Połącz anime z MyAnimeList w oknie edycji tytułu. Automatyczne sprawdzanie działa tylko dla powiązanych pozycji, raz na dobę podczas otwierania Anime.</p><label class="settings-check"><span><strong>Automatycznie aktualizuj odcinki</strong><small>Nie zmienia obejrzanego postępu ani statusu. Nie dotyczy mangi.</small></span><input id="autoEpisodesSetting" type="checkbox" checked></label><button id="syncEpisodesNow" type="button">↻ Sprawdź odcinki teraz</button><p class="settings-note" id="episodeSyncStatus">Źródło: Jikan API (MyAnimeList). Liczba odcinków może pojawić się w bazie z opóźnieniem.</p></div><div class="settings-section"><h3>↕ Sortowanie</h3><p>Osobne ustawienia dla anime i mangi. Ulubione nadal są wyświetlane jako pierwsze.</p><div class="settings-segments settings-two" id="sortCollectionChoices"><button type="button" data-sort-collection="ANIME">Anime</button><button type="button" data-sort-collection="MANGA">Manga</button></div><label class="settings-select-label">Sortuj według <select id="defaultSortSetting"><option value="date">Daty dodania</option><option value="alpha">Alfabetycznie</option><option value="progress">Postępu</option><option value="updated">Ostatniej aktualizacji</option></select></label><div class="settings-segments settings-two" id="sortOrderChoices"><button type="button" data-sort-order="asc">Rosnąco ↑</button><button type="button" data-sort-order="desc">Malejąco ↓</button></div></div></div><div class="settings-page" data-settings-panel="other" hidden><div class="settings-page-top"><button type="button" class="settings-back">← Kategorie</button><h3>⚙ Pozostałe</h3></div><div class="settings-section"><h3>♧ Bezpieczeństwo</h3><label class="settings-check"><span><strong>Potwierdzaj usuwanie</strong><small>Zapytaj przed usunięciem anime lub mangi</small></span><input id="confirmDeleteSetting" type="checkbox"></label></div><div class="settings-section"><h3>⌨ Skróty klawiaturowe</h3><label class="settings-check"><span><strong>Włącz skróty</strong><small>Esc – zamknij okno, / – wyszukaj, N – dodaj pozycję. Ctrl/Cmd + Enter zapisuje formularz.</small></span><input id="shortcutsSetting" type="checkbox"></label></div></div></div>
  </section>
 </div>
 <div id="toast" class="toast" role="status"></div>
@@ -338,7 +373,7 @@ function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show")
 function save(){try{localStorage.setItem(KEYS[section],JSON.stringify(entries));}catch(e){toast("Brak miejsca na zapis. Spróbuj użyć mniejszych okładek.");}}
 function load(){try{entries=JSON.parse(localStorage.getItem(KEYS[section])||"[]");if(!Array.isArray(entries))entries=[];}catch{entries=[]}}
 function showScreen(which){$("homeScreen").classList.toggle("active",which==="home");$("collectionScreen").classList.toggle("active",which==="collection");document.body.classList.toggle("at-home",which==="home")}
-function openCollection(which){section=which;({by:sortBy,asc:sortAsc}=getSortConfig(which));viewMode=localStorage.getItem("mojaListaDomyslnyWidok")||"grid";activeStatus="W toku";favoriteOnly=false;$("search").value="";load();$("sectionTitle").textContent=which;$("counterLabel").textContent=which==="ANIME"?"ODCINKI":"ROZDZIAŁY";$("favFilter").classList.remove("heart");$("favFilter").textContent="♡";showScreen("collection");render()}
+function openCollection(which){section=which;({by:sortBy,asc:sortAsc}=getSortConfig(which));viewMode=localStorage.getItem("mojaListaDomyslnyWidok")||"grid";activeStatus="W toku";favoriteOnly=false;$("search").value="";load();$("sectionTitle").textContent=which;$("counterLabel").textContent=which==="ANIME"?"ODCINKI":"ROZDZIAŁY";$("favFilter").classList.remove("heart");$("favFilter").textContent="♡";showScreen("collection");render();if(which==="ANIME")setTimeout(()=>syncAnimeEpisodes(false),300)}
 function renderTabs(){$("tabs").innerHTML=STATUSES.map(s=>`<button class="tab ${activeStatus===s?"active":""}" data-status="${escapeHtml(s)}" style="--tabcolor:${STATUS_COLORS[s]}">${escapeHtml(s)}</button>`).join("");$("tabs").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{activeStatus=b.dataset.status;render()}))}
 function sortedEntries(){
  let arr=entries.filter(e=>normStatus(e.statusKarty)===activeStatus);
@@ -372,7 +407,7 @@ function renderStats(){
 function render(){renderTabs();renderEntries();renderStats();$("sortBy").value=sortBy;$("sortDirection").textContent=sortAsc?"↑":"↓";document.querySelectorAll("[data-view]").forEach(b=>{let selected=b.dataset.view===viewMode;b.classList.toggle("active",selected);b.setAttribute("aria-pressed",String(selected))});$("randomBtn").style.display=activeStatus==="Planowane"?"inline-block":"none";$("favFilter").classList.toggle("heart",favoriteOnly);$("favFilter").textContent=favoriteOnly?"♥":"♡"}
 function openForm(id=null){
  editingId=id;const e=id?entries.find(x=>x.id===id):null;editDate=e?.dataDodania||new Date().toISOString();imageBase64=e?.zdjecieBase64||null;chosenIcon=e?.ikona|| (section==="ANIME"?"tv.fill":"book.fill");chosenColor=e?.kolor||(section==="ANIME"?"Red":"Blue");
- $("editLogoPreview").innerHTML=e?.logoUrl?`<img class="title-logo" src="${safeLogoUrl(e.logoUrl)}" alt="Logotyp">`:"";$("modalTitle").textContent=e?"Edytuj pozycję":"Dodaj nową pozycję";$("titleInput").value=e?.tytul||"";$("currentCount").value=e?.aktualnyLicznik??0;$("maxCount").value=e?.maxLicznik??"";$("statusInput").innerHTML=STATUSES.map(s=>`<option>${escapeHtml(s)}</option>`).join("");$("statusInput").value=normStatus(e?.statusKarty||"Planowane");renderStatusChoices();$("favoriteInput").checked=!!e?.czyUlubione;$("imageInput").value="";renderChoices();updatePreview();$("modalBackdrop").classList.add("open");$("titleInput").focus();
+ $("editLogoPreview").innerHTML=e?.logoUrl?`<img class="title-logo" src="${safeLogoUrl(e.logoUrl)}" alt="Logotyp">`:"";$("modalTitle").textContent=e?"Edytuj pozycję":"Dodaj nową pozycję";$("titleInput").value=e?.tytul||"";$("currentCount").value=e?.aktualnyLicznik??0;$("maxCount").value=e?.maxLicznik??"";$("statusInput").innerHTML=STATUSES.map(s=>`<option>${escapeHtml(s)}</option>`).join("");$("statusInput").value=normStatus(e?.statusKarty||"Planowane");renderStatusChoices();initEpisodePanel(e);$("favoriteInput").checked=!!e?.czyUlubione;$("imageInput").value="";renderChoices();updatePreview();$("modalBackdrop").classList.add("open");$("titleInput").focus();
 }
 function renderStatusChoices(){
  const current=$("statusInput").value;
@@ -389,7 +424,7 @@ function renderChoices(){
 function updatePreview(){$("previewThumb").style.background=COLORS[chosenColor]||COLORS.Blue;$("previewThumb").innerHTML=imageBase64?`<img src="${imageBase64}" alt="">`:(ICONS[chosenIcon]||"★");$("removeImage").style.display=imageBase64?"inline-block":"none";$("iconField").style.display=imageBase64?"none":"flex"}
 function closeForm(){$("modalBackdrop").classList.remove("open")}
 function saveForm(ev){ev.preventDefault();const title=$("titleInput").value.trim();if(!title)return;const count=Math.max(0,parseInt($("currentCount").value,10)||0),maxVal=$("maxCount").value.trim(),max=maxVal===""?null:Math.max(1,parseInt(maxVal,10)||1);let status=$("statusInput").value;if(max!==null&&count>=max&&status!=="Oczekuje na kolejny sezon")status="Zakończone";
- const item={id:editingId||uid(),tytul:title,ikona:chosenIcon,kolor:chosenColor,aktualnyLicznik:count,maxLicznik:max,zdjecieBase64:imageBase64,statusKarty:status,dataDodania:editDate,dataAktualizacji:new Date().toISOString(),czyUlubione:$("favoriteInput").checked,logoUrl:editingId?(entries.find(x=>x.id===editingId)?.logoUrl||null):null};
+ const item={id:editingId||uid(),tytul:title,ikona:chosenIcon,kolor:chosenColor,aktualnyLicznik:count,maxLicznik:max,zdjecieBase64:imageBase64,statusKarty:status,dataDodania:editDate,dataAktualizacji:new Date().toISOString(),czyUlubione:$("favoriteInput").checked,logoUrl:editingId?(entries.find(x=>x.id===editingId)?.logoUrl||null):null,malId:editingId?(entries.find(x=>x.id===editingId)?.malId||null):null,malTitle:editingId?(entries.find(x=>x.id===editingId)?.malTitle||null):null,malChecked:editingId?(entries.find(x=>x.id===editingId)?.malChecked||null):null};
  if(editingId){const i=entries.findIndex(x=>x.id===editingId);if(i>=0)entries[i]=item;else entries.push(item)}else entries.push(item);
  save();closeForm();render();toast(editingId?"Zmiany zapisane.":"Dodano pozycję.");
 }
@@ -406,7 +441,7 @@ function parseCSV(text){
 async function importCSV(file){
  try{const rows=parseCSV((await file.text()).replace(/^\uFEFF/,""));let added=0,addedIds=[],seen=new Set(entries.map(e=>(e.tytul||"").toLocaleLowerCase("pl")));
  rows.forEach((r,i)=>{const title=(r[0]||"").trim();if(!title||(i===0&&["nazwa","title"].includes(title.toLowerCase())))return;const key=title.toLocaleLowerCase("pl");if(seen.has(key))return;seen.add(key);let status=STATUSES.find(s=>s.toLocaleLowerCase("pl")===normStatus((r[2]||"Planowane").trim()).toLocaleLowerCase("pl"))||"Planowane";let fav=["tak","true","1","yes"].includes((r[3]||"").trim().toLowerCase());const newId=uid();addedIds.push(newId);entries.push({id:newId,tytul:title,ikona:section==="ANIME"?"tv.fill":"book.fill",kolor:section==="ANIME"?"Red":"Blue",aktualnyLicznik:Math.max(0,parseInt(r[1],10)||0),maxLicznik:null,zdjecieBase64:null,statusKarty:status,dataDodania:new Date().toISOString(),czyUlubione:fav});added++});
- save();render();toast(`Import zakończony. Dodano: ${added}.`);if(addedIds.length){pendingLogoReview={collection:section,ids:addedIds};if(confirm(`Dodano ${added} pozycji. Otworzyć wyszukiwarkę logotypów, aby przejrzeć propozycje dla nowych tytułów?`)){settingsState.collection=section;$("settingsBackdrop").classList.add("open");refreshSettings();startLogoReview(section,addedIds)}}}catch(e){toast("Nie udało się odczytać tego pliku CSV.")}
+ save();render();toast(`Import zakończony. Dodano: ${added}.`);if(addedIds.length){pendingLogoReview={collection:section,ids:addedIds};if(confirm(`Dodano ${added} pozycji. Otworzyć wyszukiwarkę logotypów, aby przejrzeć propozycje dla nowych tytułów?`)){settingsState.collection=section;$("settingsBackdrop").classList.add("open");refreshSettings();setSettingsPage("logos");startLogoReview(section,addedIds)}}}catch(e){toast("Nie udało się odczytać tego pliku CSV.")}
 }
 function randomPlanned(){const pool=entries.filter(e=>normStatus(e.statusKarty)==="Planowane");if(!pool.length){toast("Brak pozycji w Planowanych.");return}const e=pool[Math.floor(Math.random()*pool.length)];if(confirm(`Los na dziś: „${e.tytul}”!\n\nPrzenieść tę pozycję do „W toku” i zacząć?`)){e.statusKarty="W toku";save();activeStatus="W toku";render()}}
 document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openCollection(b.dataset.open)));
@@ -473,6 +508,46 @@ $("logoBatch").onclick=()=>{const ids=logoItems(logoCollection).filter(e=>!e.log
 $("logoNext").onclick=()=>nextLogoReview();$("logoStop").onclick=()=>{logoReview=[];$("logoNext").hidden=true;$("logoStop").hidden=true;$("logoInfo").textContent="Przegląd przerwany."};
 $("logoUploadSave").onclick=async()=>{const file=$("logoUpload").files?.[0];if(!file||!/^image\/(png|webp|jpeg)$/.test(file.type)||file.size>700000){toast("Wybierz PNG/WebP/JPG do 700 KB.");return}const reader=new FileReader();reader.onload=()=>{updateLogoForSelected(reader.result);$("logoUpload").value=""};reader.readAsDataURL(file)};
 
+// Jikan API — tylko ręcznie potwierdzone dopasowania, bez zgadywania po nazwie.
+let episodeLookupResults=[];
+function initEpisodePanel(e){
+ const enabled=section==="ANIME";$("episodePanel").hidden=!enabled;if(!enabled)return;
+ $("episodeSearchInput").value=e?.tytul||$("titleInput").value||"";
+ $("episodeResults").innerHTML="";episodeLookupResults=[];
+ $("episodeLinkInfo").textContent=e?.malId?`Powiązano: ${e.malTitle||e.tytul} (ID ${e.malId}). ${e.malChecked?"Ostatnio sprawdzono: "+new Date(e.malChecked).toLocaleString("pl-PL"):"Jeszcze nie sprawdzono."}`:"Brak powiązania. Wybierz właściwą serię z wyników wyszukiwania.";
+ $("episodeUnlink").disabled=!e?.malId;
+}
+async function jikanGet(path){const res=await fetch("https://api.jikan.moe/v4/"+path,{headers:{Accept:"application/json"}});if(!res.ok)throw Error(res.status===429?"Limit zapytań API. Spróbuj za chwilę.":"Błąd API: "+res.status);return await res.json()}
+$("episodeSearchBtn").onclick=async()=>{
+ const q=$("episodeSearchInput").value.trim();if(!q)return;
+ $("episodeResults").textContent="Wyszukiwanie…";$("episodeSearchBtn").disabled=true;
+ try{const result=await jikanGet("anime?q="+encodeURIComponent(q)+"&limit=8");episodeLookupResults=result.data||[];
+ $("episodeResults").innerHTML=episodeLookupResults.length?episodeLookupResults.map((a,i)=>`<div class="episode-result">${a.images?.jpg?.small_image_url?`<img src="${escapeHtml(a.images.jpg.small_image_url)}" alt="">`:""}<span><strong>${escapeHtml(a.title||"")}</strong><br><small>${escapeHtml(a.type||"")} · ${a.year||"rok nieznany"} · ${a.episodes??"?"} odc.</small></span><button type="button" data-mal-choice="${i}">Wybierz</button></div>`).join(""):"Nie znaleziono tytułów.";
+ $("episodeResults").querySelectorAll("[data-mal-choice]").forEach(b=>b.onclick=()=>{const a=episodeLookupResults[Number(b.dataset.malChoice)];if(!a)return;const old=entries.find(x=>x.id===editingId);if(!old){$("episodeLinkInfo").textContent="Najpierw zapisz nowy tytuł, a potem otwórz jego edycję i przypisz serię.";return}old.malId=a.mal_id;old.malTitle=a.title;old.malChecked=null;if(Number.isInteger(a.episodes)&&a.episodes>0)old.maxLicznik=a.episodes;save();$("maxCount").value=old.maxLicznik??"";$("episodeLinkInfo").textContent=`Powiązano: ${a.title} (ID ${a.mal_id}).`;$("episodeUnlink").disabled=false;$("episodeResults").innerHTML="";toast("Powiązano anime. Zapisz formularz, aby zachować pozostałe zmiany.")});
+ }catch(err){$("episodeResults").textContent="Nie udało się wyszukać: "+err.message}finally{$("episodeSearchBtn").disabled=false}
+};
+$("episodeUnlink").onclick=()=>{const e=entries.find(x=>x.id===editingId);if(!e)return;delete e.malId;delete e.malTitle;delete e.malChecked;save();initEpisodePanel(e);toast("Odłączono powiązanie.")};
+let episodeSyncRunning=false;
+async function syncAnimeEpisodes(force){
+ if(episodeSyncRunning||(!force&&localStorage.getItem("mojaListaAutoOdcinki")==="false"))return;
+ const anime=JSON.parse(localStorage.getItem(KEYS.ANIME)||"[]");if(!Array.isArray(anime))return;
+ const linked=anime.filter(x=>x&&Number.isInteger(Number(x.malId))&&Number(x.malId)>0&&(force||!x.malChecked||Date.now()-new Date(x.malChecked).getTime()>86400000));
+ if(!linked.length){if(force)toast("Brak anime do aktualizacji. Powiąż tytuły w edycji.");return}
+ episodeSyncRunning=true;let updated=0,errors=0;
+ if($("episodeSyncStatus"))$("episodeSyncStatus").textContent=`Sprawdzanie: 0 / ${linked.length}`;
+ for(let i=0;i<linked.length;i++){
+  const item=linked[i];try{const result=await jikanGet("anime/"+encodeURIComponent(item.malId)+"/full");const data=result.data;if(!data)throw Error("Brak danych");
+   const fresh=JSON.parse(localStorage.getItem(KEYS.ANIME)||"[]");const target=fresh.find(x=>x.id===item.id&&String(x.malId)===String(item.malId));if(target){const count=Number(data.episodes);if(Number.isInteger(count)&&count>0&&target.maxLicznik!==count){target.maxLicznik=count;updated++}target.malChecked=new Date().toISOString();target.malTitle=data.title||target.malTitle;localStorage.setItem(KEYS.ANIME,JSON.stringify(fresh));if(section==="ANIME")load()}
+  }catch(err){errors++}
+  if($("episodeSyncStatus"))$("episodeSyncStatus").textContent=`Sprawdzanie: ${i+1} / ${linked.length}`;
+  if(i<linked.length-1)await new Promise(resolve=>setTimeout(resolve,1100));
+ }
+ episodeSyncRunning=false;if(section==="ANIME"&&$("collectionScreen").classList.contains("active"))render();
+ if($("episodeSyncStatus"))$("episodeSyncStatus").textContent=`Zakończono: ${updated} zmienionych, ${errors} błędów. ${new Date().toLocaleTimeString("pl-PL")}`;
+ if(force)toast(`Aktualizacja: ${updated} zmienionych, ${errors} błędów.`);
+}
+$("syncEpisodesNow").onclick=()=>syncAnimeEpisodes(true);
+$("autoEpisodesSetting").onchange=e=>localStorage.setItem("mojaListaAutoOdcinki",String(e.target.checked));
 function setting(key,fallback){return localStorage.getItem(key)??fallback}
 function applyCollectionSettings(){const bg=setting("mojaListaTloLogotypow","gradient");["cover","black","gradient"].forEach(v=>document.body.classList.toggle(`logo-bg-${v}`,bg===v));const size=setting("mojaListaRozmiarKafelkow","medium");["small","medium","large"].forEach(v=>document.body.classList.toggle(`tile-${v}`,v===size));document.body.classList.toggle("hide-tile-counter",setting("mojaListaPokazLicznik","true")==="false");document.body.classList.toggle("hide-tile-controls",setting("mojaListaPokazPrzyciski","true")==="false");document.body.classList.toggle("cover-contain",setting("mojaListaDopasowanieOkladek","cover")==="contain")}
 function selectSetting(group,attribute,value){document.querySelectorAll(`[${attribute}]`).forEach(b=>b.classList.toggle("active",b.getAttribute(attribute)===value))}
@@ -482,7 +557,7 @@ function refreshSettings(){
  const theme=localStorage.getItem("mojaListaMotyw")||"dark";
  document.querySelectorAll("[data-theme]").forEach(b=>b.classList.toggle("active",b.dataset.theme===theme));
  document.querySelectorAll("[data-data]").forEach(b=>b.classList.toggle("active",b.dataset.data===settingsState.collection));
- $("confirmDeleteSetting").checked=localStorage.getItem("mojaListaPotwierdzajUsuwanie")!=="false";
+ $("confirmDeleteSetting").checked=localStorage.getItem("mojaListaPotwierdzajUsuwanie")!=="false";$("autoEpisodesSetting").checked=localStorage.getItem("mojaListaAutoOdcinki")!=="false";
  selectSetting("","data-logo-bg",setting("mojaListaTloLogotypow","gradient"));selectSetting("","data-tile-size",setting("mojaListaRozmiarKafelkow","medium"));selectSetting("","data-default-view",setting("mojaListaDomyslnyWidok","grid"));selectSetting("","data-cover-fit",setting("mojaListaDopasowanieOkladek","cover"));
  $("showCounterSetting").checked=setting("mojaListaPokazLicznik","true")!=="false";$("showProgressSetting").checked=setting("mojaListaPokazPrzyciski","true")!=="false";$("shortcutsSetting").checked=setting("mojaListaSkroty","true")!=="false";refreshSortSettings();
  const anime=JSON.parse(localStorage.getItem(KEYS.ANIME)||"[]"),manga=JSON.parse(localStorage.getItem(KEYS.MANGA)||"[]");
@@ -491,8 +566,19 @@ function refreshSettings(){
  $("storageTotal").textContent=`Dane kolekcji: ${(bytes/1024/1024).toFixed(2)} MB`;
 }
 function applyTheme(){const t=localStorage.getItem("mojaListaMotyw")||"dark";document.body.classList.toggle("light-theme",t==="light"||(t==="system"&&matchMedia("(prefers-color-scheme: light)").matches));refreshSettings()}
+
+function setSettingsPage(page="home"){
+ const home=page==="home";
+ $("settingsHome").hidden=!home;
+ document.querySelectorAll("[data-settings-panel]").forEach(panel=>{panel.hidden=panel.dataset.settingsPanel!==page});
+ $("settingsTitle").textContent=home?"⚙ Ustawienia":({appearance:"◐ Wygląd",logos:"✦ Logotypy",data:"▤ Dane i kopie",collection:"↕ Kolekcja",other:"⚙ Pozostałe"}[page]||"⚙ Ustawienia");
+ document.querySelector(".settings-content").scrollTop=0;
+}
+document.querySelectorAll("[data-settings-page]").forEach(b=>b.addEventListener("click",()=>setSettingsPage(b.dataset.settingsPage)));
+document.querySelectorAll(".settings-back").forEach(b=>b.addEventListener("click",()=>setSettingsPage("home")));
+
 function closeSettings(){$("settingsBackdrop").classList.remove("open")}
-$("settingsBtn").onclick=()=>{settingsState.collection=section;settingsState.sortCollection=section;refreshSettings();fillLogoEntries();$("settingsBackdrop").classList.add("open")};
+$("settingsBtn").onclick=()=>{settingsState.collection=section;settingsState.sortCollection=section;refreshSettings();fillLogoEntries();setSettingsPage("home");$("settingsBackdrop").classList.add("open")};
 $("closeSettings").onclick=closeSettings;$("settingsBackdrop").onclick=e=>{if(e.target===$("settingsBackdrop"))closeSettings()};
 document.querySelectorAll("[data-theme]").forEach(b=>b.onclick=()=>{localStorage.setItem("mojaListaMotyw",b.dataset.theme);applyTheme()});
 document.querySelectorAll("[data-data]").forEach(b=>b.onclick=()=>{settingsState.collection=b.dataset.data;refreshSettings()});
