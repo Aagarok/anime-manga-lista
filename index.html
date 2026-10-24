@@ -140,18 +140,26 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .status-choice{font-size:12px}
 }
 
-/* NOWY WYGLĄD KAFELKÓW */
+
+/* KWADRATOWE KAFELKI */
 .grid {
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
+  align-items: start;
 }
 
 .tile {
-  aspect-ratio: 3 / 4;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   min-width: 0;
-  border-radius: 16px;
+  min-height: 0;
+  height: auto;
+  padding: 0;
   overflow: hidden;
   isolation: isolate;
+  border-radius: 15px;
+  cursor: default;
   transition: transform .18s ease, border-color .18s ease;
 }
 
@@ -160,68 +168,78 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none}
   border-color: #59647d;
 }
 
-.poster {
+/* Okładka zajmuje cały kwadrat */
+.tile .poster {
   position: absolute;
   inset: 0;
-  height: 100%;
   width: 100%;
-  z-index: -1;
+  height: 100%;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
 }
 
-.poster img {
+.tile .poster > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transition: transform .3s ease;
 }
 
-.tile:hover .poster img {
+.tile:hover .poster > img {
   transform: scale(1.035);
 }
 
-.poster-actions {
-  inset: 9px 9px auto;
-  z-index: 2;
+/* Przyciski w górnych rogach */
+.tile .poster-actions {
+  position: absolute;
+  inset: 7px 7px auto;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   pointer-events: none;
 }
 
-.poster-actions button {
+.tile .poster-actions button {
   pointer-events: auto;
-  width: 36px;
-  height: 36px;
   display: grid;
   place-items: center;
+  width: 36px;
+  height: 36px;
   padding: 0;
   border: 0;
   border-radius: 50%;
   background: transparent;
   color: white;
-  font-size: 23px;
-  text-shadow: 0 2px 8px #000;
+  font-size: 24px;
+  text-shadow: 0 2px 6px #000;
   box-shadow: none;
 }
 
-.poster-actions button:hover {
+.tile .poster-actions button:hover {
   background: transparent;
-  transform: scale(1.12);
-  filter: brightness(1.2);
+  transform: scale(1.1);
 }
 
-.poster-actions .favorite-btn,
-.poster-actions .favorite-btn.selected {
-  width: 38px;
-  height: 38px;
+.tile .poster-actions .favorite-btn,
+.tile .poster-actions .favorite-btn.selected {
+  width: 36px;
+  height: 36px;
   padding: 0;
   border: 0;
   border-radius: 50%;
   background: transparent;
   color: white;
-  text-shadow: 0 2px 8px #000;
   box-shadow: none;
 }
 
-.poster-actions .favorite-btn.selected {
+.tile .poster-actions .favorite-btn.selected {
   color: #ff5478;
 }
 
-.poster-actions .favorite-btn svg {
+.tile .poster-actions .favorite-btn svg {
   width: 25px;
   height: 25px;
   fill: transparent;
@@ -229,51 +247,63 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none}
   filter: drop-shadow(0 1px 3px #000);
 }
 
-.poster-actions .favorite-btn.selected svg {
+.tile .poster-actions .favorite-btn.selected svg {
   fill: #ff5478;
 }
 
-.tile-body {
+/* Tytuł i postęp na dole */
+.tile .tile-body {
   position: absolute;
   inset: auto 0 0;
-  padding: 12px 10px;
+  z-index: 2;
+  padding: 34px 10px 10px;
   background: linear-gradient(
     transparent,
-    #101219d9 20%,
-    #101219f5 48%
+    #101219e8 38%,
+    #101219fa 100%
   );
 }
 
-.tile-title {
-  padding-top: 18px;
+.tile .tile-title {
+  padding-top: 0;
   font-size: 14px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.tile-body .entry-sub {
+.tile .entry-sub {
+  margin-top: 4px;
   font-size: 12px;
 }
 
-.tile-actions {
+/* Liczniki w prawym dolnym rogu */
+.tile .tile-actions {
   position: absolute;
-  right: 8px;
-  bottom: calc(100% + 8px);
-  margin: 0;
+  right: 7px;
+  bottom: calc(100% + 7px);
+  z-index: 3;
+  display: flex;
   gap: 5px;
+  margin: 0;
 }
 
-.tile-actions button {
+.tile .tile-actions button {
   flex: 0 0 auto;
-  min-width: 34px;
-  height: 32px;
-  padding: 4px 9px;
-  border: 1px solid #ffffff40;
-  border-radius: 9px;
-  background: #11131abf;
-  backdrop-filter: blur(8px);
+  min-width: 32px;
+  height: 30px;
+  padding: 3px 8px;
+  border: 1px solid #ffffff55;
+  border-radius: 8px;
+  background: #11131acc;
+  color: white;
   font-weight: 800;
+  backdrop-filter: blur(6px);
 }
 
-.tile-actions [data-action="edit"] {
+.tile .tile-actions [data-action="edit"] {
   display: none;
 }
 
@@ -283,27 +313,32 @@ button:disabled{opacity:.4;cursor:not-allowed;transform:none}
     gap: 9px;
   }
 
-  .tile {
-    aspect-ratio: 3 / 4;
+  .tile .tile-body {
+    padding: 28px 7px 8px;
   }
 
-  .tile-body {
-    padding: 9px 7px;
+  .tile .tile-title {
+    font-size: 12px;
   }
 
-  .tile-actions {
+  .tile .entry-sub {
+    font-size: 11px;
+  }
+
+  .tile .tile-actions {
     right: 5px;
     bottom: calc(100% + 5px);
     gap: 3px;
   }
 
-  .tile-actions button {
-    min-width: 29px;
-    height: 29px;
-    padding: 3px 6px;
+  .tile .tile-actions button {
+    min-width: 28px;
+    height: 28px;
+    padding: 2px 6px;
     font-size: 12px;
   }
 }
+
 
 </style>
 </head>
