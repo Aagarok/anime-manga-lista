@@ -70,13 +70,85 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;bo
 .media-settings .favorite-field{justify-content:center;align-self:center}
 .media-settings .favorite-toggle{width:104px}
 @media(max-width:520px){.media-settings{grid-template-columns:minmax(0,1fr) 100px;gap:9px}.media-settings .favorite-toggle{width:94px}.media-settings .preview{flex-wrap:wrap}.media-settings #imageInput{max-width:100%}}
+
+/* Menu główne bez przewijania; kolekcje zachowują zwykły scroll */
+body.at-home{height:100dvh;overflow:hidden}
+body.at-home .app{height:100dvh;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+body.at-home .topline{flex-shrink:0}
+body.at-home #homeScreen.active{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+body.at-home .hero{flex:1;min-height:0;padding:clamp(10px,2.5vh,30px);gap:clamp(6px,1.5vh,16px)}
+body.at-home .hero h1{font-size:clamp(28px,5vh,65px);margin:0}
+body.at-home .hero p{margin:0;font-size:clamp(12px,1.7vh,16px)}
+body.at-home .home-cards{width:min(100%,min(88vh,880px));grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,2vw,26px)}
+body.at-home .home-card{width:100%;min-height:0;aspect-ratio:1/1;border-radius:clamp(15px,2vw,28px);font-size:clamp(20px,3vw,39px);gap:clamp(5px,1.5vh,16px);padding:8px}
+body.at-home .home-card .emoji svg{width:clamp(40px,7vh,82px);height:clamp(40px,7vh,82px)}
+body.at-home .footer-note{flex-shrink:0;margin:0;padding:clamp(4px,1vh,10px);font-size:11px}
+.view-switch{display:flex;align-items:center;gap:3px;padding:3px;background:#10131b;border:1px solid var(--line);border-radius:11px}
+.view-switch button{min-width:37px;height:36px;border:0;background:transparent;color:var(--muted);padding:3px;font-size:23px;border-radius:8px;line-height:1}
+.view-switch button.active{background:#344b77;color:#fff}
+@media(max-width:600px){body.at-home .hero{padding:10px}body.at-home .home-cards{width:100%;gap:10px}body.at-home .home-card{font-size:clamp(17px,5vw,27px)}body.at-home .hero p{font-size:12px}body.at-home .home-card .emoji svg{width:clamp(32px,6vh,58px);height:clamp(32px,6vh,58px)}}
+@media(max-height:530px){body.at-home .hero p{display:none}body.at-home .hero{gap:5px}body.at-home .home-cards{width:min(100%,75vh)}body.at-home .home-card .emoji svg{width:34px;height:34px}}
+
+/* Menu główne – wyśrodkowane ikony i podpisy, większy odstęp */
+body.at-home .home-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,3vh,30px);text-align:center}
+body.at-home .home-card .emoji{display:flex;align-items:center;justify-content:center;width:clamp(58px,9vh,94px);height:clamp(58px,9vh,94px);flex:none}
+body.at-home .home-card .emoji svg{display:block;width:clamp(48px,7vh,82px);height:clamp(48px,7vh,82px)}
+body.at-home .home-card-label{display:block;width:100%;text-align:center;line-height:1.15}
+@media(max-height:530px){body.at-home .home-card{gap:12px}}
+
+/* Ustawienia – osobne, wyśrodkowane okno */
+.topline{position:relative;z-index:1}.settings-gear{margin-left:auto;flex:none;width:43px;height:43px;border-radius:13px;font-size:25px;display:grid;place-items:center;background:#242a39cc}
+.settings-modal{width:min(760px,100%);max-height:min(90dvh,820px);display:flex;flex-direction:column}
+.settings-modal .modal-head{flex:none}.settings-content{overflow-y:auto;padding:18px 22px 24px;display:grid;gap:16px}
+.settings-section{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:17px;display:grid;gap:12px}
+.settings-section h3{margin:0;font-size:16px}.settings-section p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.settings-segments{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.settings-segments:has([data-data]){grid-template-columns:repeat(2,minmax(0,1fr))}
+.settings-segments button{font-weight:750;min-width:0;padding:12px 7px}.settings-segments button.active{background:#37578f;color:white;border-color:#719af1}
+.settings-file-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.settings-file-actions button{padding:15px 6px;font-weight:750}
+.settings-backup{width:100%;text-align:center;border-color:#6c8cbe;background:#243957;color:#fff;font-weight:750}
+.settings-check{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer}.settings-check span{display:grid;gap:4px}.settings-check small{font-size:12px;color:var(--muted)}
+.settings-check input{appearance:none;flex:none;width:48px;height:27px;border-radius:30px;background:#525b6c;border:1px solid #ffffff33;position:relative;cursor:pointer;transition:background .2s}
+.settings-check input:before{content:"";position:absolute;width:19px;height:19px;border-radius:50%;background:white;left:3px;top:3px;transition:transform .2s}
+.settings-check input:checked{background:#5793ff}.settings-check input:checked:before{transform:translateX(21px)}
+.settings-summary{display:flex;gap:8px;flex-wrap:wrap}.settings-summary span{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:12px}
+/* Jasny motyw zachowuje oryginalne rozmieszczenie elementów */
+body.light-theme{--bg:#f1f3f9;--panel:#fff;--panel2:#e9edf5;--line:#cbd2e1;--muted:#526079;--text:#172035;color-scheme:light;background:var(--bg);color:var(--text)}
+body.light-theme .hero{background:linear-gradient(90deg,#f0f2f4d6,#f0f2f4d6),url('assets/tlo.png') center center / auto 88% no-repeat,#e4eaf4;border-color:#bfc8da}
+body.light-theme .hero p{color:#526079}body.light-theme .toolbar,body.light-theme .tabs{background:#e9edf5}
+body.light-theme input:not([type=checkbox]),body.light-theme select,body.light-theme textarea,body.light-theme .field{background:#fff;color:#172035}
+body.light-theme .modal{background:#f7f9fd}body.light-theme .settings-gear{background:#e9edf5}
+body.light-theme .tab.active{background:#fff}body.light-theme .empty{background:#e9edf5}
+body.light-theme .home-card,body.light-theme .tile .tile-actions button,body.light-theme .poster-actions button{color:white}
+body.light-theme .tile-body,body.light-theme .tile-body .entry-sub{color:white}
+body.light-theme .footer-note{color:#526079}body.light-theme .toast{background:#e4eaf4;color:#172035}
+@media(max-width:600px){.settings-content{padding:12px;gap:10px}.settings-section{padding:13px}.settings-segments button{font-size:12px}.settings-file-actions button{font-size:12px}}
+
+/* Dodatkowe ustawienia kolekcji */
+.settings-segments.settings-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.settings-select-label{display:flex;flex-direction:column;gap:7px;font-size:13px;color:var(--muted)}
+.settings-select-label select{width:100%;max-width:none}
+.settings-restore{width:100%;font-weight:750;padding:13px;border-color:var(--line)}
+body.light-theme .settings-backup{color:#fff}
+body.tile-small .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}
+body.tile-medium .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+body.tile-large .grid{grid-template-columns:repeat(auto-fill,minmax(245px,1fr))}
+body.hide-tile-counter .tile .entry-sub{display:none}
+body.hide-tile-controls .tile .tile-actions{display:none}
+body.cover-contain .tile .poster img{object-fit:contain}
+body.cover-contain .tile .poster{background:#1b2230}
+@media(max-width:500px){body.tile-small .grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.tile-medium .grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.tile-large .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Większy, wyśrodkowany kafelek Ustawienia w menu głównym */
+.topline .settings-gear{width:112px;height:82px;min-width:112px;min-height:82px;padding:9px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border-radius:17px;text-align:center;line-height:1.1}
+.settings-gear-icon{font-size:30px;line-height:1;display:block}
+.settings-gear-label{font-size:13px;font-weight:750;letter-spacing:.1px;display:block}
+@media(max-width:480px){.topline .settings-gear{width:94px;min-width:94px;height:70px;min-height:70px;padding:7px 5px;gap:4px}.settings-gear-icon{font-size:26px}.settings-gear-label{font-size:12px}}
 </style>
 </head>
-<body>
+<body class="at-home">
 <div class="app">
   <div class="topline">
-    <div class="brand">MOJA LISTA <small>Twoja prywatna kolekcja anime i mangi</small></div>
-    <button class="quiet" id="homeBtn" title="Menu główne">⌂ Menu</button>
+    <div class="brand">MOJA LISTA <small>Twoja prywatna kolekcja anime i mangi</small></div><button id="settingsBtn" class="settings-gear" type="button" title="Ustawienia" aria-label="Ustawienia"><span class="settings-gear-icon" aria-hidden="true">⚙</span><span class="settings-gear-label">Ustawienia</span></button>
+
   </div>
 
   <main id="homeScreen" class="screen active">
@@ -84,22 +156,22 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;bo
       <h1>Moja Lista</h1>
       <p>Wszystkie anime i mangi w jednym miejscu. Zapisuj postępy, organizuj kolekcję i wybierz, co oglądać lub czytać dalej.</p>
       <div class="home-cards">
-        <button class="home-card anime-card" data-open="ANIME"><span class="emoji"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="3"/><path d="M8 22h8M12 19v3M8 9l3 3 5-5"/></svg></span>ANIME<span style="font-size:13px;font-weight:550;opacity:.85">Śledź odcinki</span></button>
-        <button class="home-card manga-card" data-open="MANGA"><span class="emoji"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Z"/><path d="M12 6v14M6 9h3M15 9h3M15 12h3"/></svg></span>MANGA<span style="font-size:13px;font-weight:550;opacity:.85">Śledź rozdziały</span></button>
+        <button class="home-card anime-card" data-open="ANIME"><span class="emoji"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="15" rx="3"/><path d="M8 22h8M12 19v3M8 9l3 3 5-5"/></svg></span><span class="home-card-label">ANIME</span></button>
+        <button class="home-card manga-card" data-open="MANGA"><span class="emoji"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6c-3-2-6-2-9-1v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Z"/><path d="M12 6v14M6 9h3M15 9h3M15 12h3"/></svg></span><span class="home-card-label">MANGA</span></button>
       </div>
     </section>
     <p class="footer-note">Dane zapisują się lokalnie w tej przeglądarce na tym urządzeniu.</p>
   </main>
 
   <main id="collectionScreen" class="screen">
-    <div class="section-head"><button id="backBtn">←</button><h1 id="sectionTitle">ANIME</h1><div class="spacer"></div><span id="countBadge" class="subtle"></span></div>
+    <div class="section-head"><button id="backBtn" title="Powrót do menu" aria-label="Powrót do menu">←</button><h1 id="sectionTitle">ANIME</h1><div class="spacer"></div><span id="countBadge" class="subtle"></span></div>
     <div class="toolbar">
-      <button id="importBtn">⇧ Importuj CSV</button><button id="exportBtn">⇩ Eksportuj CSV</button>
+
       <input id="search" type="search" placeholder="⌕ Szukaj po tytule…">
       <button id="favFilter" title="Pokaż ulubione">♡</button>
       <select id="sortBy" aria-label="Sortowanie"><option value="date">Według daty</option><option value="alpha">Alfabetycznie</option></select>
       <button id="sortDirection" title="Zmień kierunek">↑</button>
-      <select id="viewMode" aria-label="Widok"><option value="list">☷ Lista</option><option value="grid">▦ Kafelki</option></select>
+      <div class="view-switch" role="group" aria-label="Wybór widoku"><button type="button" data-view="grid" title="Kafelki" aria-label="Kafelki">▦</button><button type="button" data-view="list" title="Lista" aria-label="Lista">☷</button></div>
       <button id="randomBtn" title="Losuj z planowanych">🎲 Losuj</button>
       <button id="addBtn" class="primary">＋ Dodaj</button>
       <input type="file" id="csvFile" accept=".csv,text/csv" hidden>
@@ -135,6 +207,27 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;bo
     </form>
   </section>
 </div>
+
+<div class="modal-backdrop" id="settingsBackdrop">
+ <section class="modal settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="modal-head"><h2 id="settingsTitle">⚙ Ustawienia</h2><div class="spacer"></div><button id="closeSettings" aria-label="Zamknij ustawienia">✕</button></div>
+  <div class="settings-content">
+   <div class="settings-section"><h3>◐ Wygląd aplikacji</h3><p>Wybierz motyw strony.</p><div class="settings-segments" id="themeChoices"><button data-theme="dark" type="button">☾ Ciemny</button><button data-theme="light" type="button">☀ Jasny</button><button data-theme="system" type="button">◐ Systemowy</button></div></div>
+   <div class="settings-section"><h3>▦ Wygląd kolekcji</h3>
+    <p>Wielkość kafelków</p><div class="settings-segments" id="tileSizeChoices"><button type="button" data-tile-size="small">Małe</button><button type="button" data-tile-size="medium">Średnie</button><button type="button" data-tile-size="large">Duże</button></div>
+    <label class="settings-check"><span><strong>Pokazuj liczniki</strong><small>Liczba odcinków lub rozdziałów na kafelku</small></span><input id="showCounterSetting" type="checkbox"></label>
+    <label class="settings-check"><span><strong>Pokazuj przyciski + i −</strong><small>Zmiana postępu bez otwierania edycji</small></span><input id="showProgressSetting" type="checkbox"></label>
+    <p>Domyślny widok po otwarciu kolekcji</p><div class="settings-segments settings-two" id="defaultViewChoices"><button type="button" data-default-view="grid">▦ Kafelki</button><button type="button" data-default-view="list">☷ Lista</button></div>
+    <p>Sposób wyświetlania okładki</p><div class="settings-segments settings-two" id="coverFitChoices"><button type="button" data-cover-fit="cover">Wypełnij kafelek</button><button type="button" data-cover-fit="contain">Pokaż całą</button></div>
+   </div>
+   <div class="settings-section"><h3>↕ Sortowanie</h3><p>Osobne ustawienia dla anime i mangi. Ulubione nadal są wyświetlane jako pierwsze.</p><div class="settings-segments settings-two" id="sortCollectionChoices"><button type="button" data-sort-collection="ANIME">Anime</button><button type="button" data-sort-collection="MANGA">Manga</button></div><label class="settings-select-label">Sortuj według <select id="defaultSortSetting"><option value="date">Daty dodania</option><option value="alpha">Alfabetycznie</option><option value="progress">Postępu</option><option value="updated">Ostatniej aktualizacji</option></select></label><div class="settings-segments settings-two" id="sortOrderChoices"><button type="button" data-sort-order="asc">Rosnąco ↑</button><button type="button" data-sort-order="desc">Malejąco ↓</button></div></div>
+   <div class="settings-section"><h3>▤ Dane i kopie zapasowe</h3><p>Wybierz kolekcję do importu lub eksportu CSV.</p><div class="settings-segments" id="dataChoices"><button data-data="ANIME" type="button">Anime</button><button data-data="MANGA" type="button">Manga</button></div><div class="settings-file-actions"><button id="settingsImport" type="button">⇧ Importuj CSV</button><button id="settingsExport" type="button">⇩ Eksportuj CSV</button></div><p class="settings-note">Import dodaje nowe tytuły i pomija duplikaty. Nie usuwa istniejących wpisów.</p><button id="settingsBackup" type="button" class="settings-backup">⇩ Pobierz pełną kopię anime i mangi (JSON)</button><p class="settings-note">Pełna kopia zawiera także okładki, daty i pozostałe szczegóły, których zwykły CSV nie przechowuje.</p><button id="settingsRestore" type="button" class="settings-restore">↥ Przywróć pełną kopię (JSON)</button><input id="backupFile" type="file" accept=".json,application/json" hidden><p class="settings-note">Przywracanie zastąpi obie obecne kolekcje. Przed zmianą pojawi się potwierdzenie.</p></div>
+   <div class="settings-section"><h3>♧ Bezpieczeństwo</h3><label class="settings-check"><span><strong>Potwierdzaj usuwanie</strong><small>Zapytaj przed usunięciem anime lub mangi</small></span><input id="confirmDeleteSetting" type="checkbox"></label></div>
+   <div class="settings-section"><h3>⌨ Skróty klawiaturowe</h3><label class="settings-check"><span><strong>Włącz skróty</strong><small>Esc – zamknij okno, / – wyszukaj, N – dodaj pozycję. Ctrl/Cmd + Enter zapisuje formularz.</small></span><input id="shortcutsSetting" type="checkbox"></label></div>
+   <div class="settings-section"><h3>◫ Twoje dane</h3><div class="settings-summary"><span id="animeTotal">Anime: 0</span><span id="mangaTotal">Manga: 0</span><span id="storageTotal">Zajęte miejsce: —</span></div><p class="settings-note">Dane pozostają zapisane lokalnie w tej przeglądarce.</p></div>
+  </div>
+ </section>
+</div>
 <div id="toast" class="toast" role="status"></div>
 
 <script>
@@ -153,8 +246,11 @@ const COLORS = {"Blue":"#5793ff","Purple":"#a778ff","Pink":"#ff66ad","Orange":"#
 const KEYS = {ANIME:"listaAnime",MANGA:"listaMangi"};
 const $ = id => document.getElementById(id);
 let section = "ANIME", activeStatus = "W toku", entries = [], favoriteOnly = false, editingId = null, editDate = null, imageBase64 = null, chosenIcon = "star.fill", chosenColor = "Blue";
-let sortBy = localStorage.getItem("wybraneKryteriumSortowania") || "date";
-let sortAsc = localStorage.getItem("kierunekSortowaniaRosnaco") !== "false";
+const sortConfigKey = collection => `mojaListaSortowanie_${collection}`;
+function getSortConfig(collection){try{const c=JSON.parse(localStorage.getItem(sortConfigKey(collection))||"null");if(c&&["date","alpha","progress","updated"].includes(c.by))return {by:c.by,asc:c.asc!==false}}catch{}return {by:localStorage.getItem("wybraneKryteriumSortowania")||"date",asc:localStorage.getItem("kierunekSortowaniaRosnaco")!=="false"}}
+let sortBy=getSortConfig(section).by;
+let sortAsc=getSortConfig(section).asc;
+function persistSort(){localStorage.setItem(sortConfigKey(section),JSON.stringify({by:sortBy,asc:sortAsc}))}
 let viewMode = localStorage.getItem("wybranyStylWidoku") || "grid";
 // Jednorazowe przywrócenie kafelków po wcześniejszej błędnej aktualizacji.
 if(!localStorage.getItem("mojaListaKafelkiV2")){viewMode="grid";localStorage.setItem("wybranyStylWidoku","grid");localStorage.setItem("mojaListaKafelkiV2","1");}
@@ -165,21 +261,21 @@ const uid = () => (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Ma
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2800)}
 function save(){try{localStorage.setItem(KEYS[section],JSON.stringify(entries));}catch(e){toast("Brak miejsca na zapis. Spróbuj użyć mniejszych okładek.");}}
 function load(){try{entries=JSON.parse(localStorage.getItem(KEYS[section])||"[]");if(!Array.isArray(entries))entries=[];}catch{entries=[]}}
-function showScreen(which){$("homeScreen").classList.toggle("active",which==="home");$("collectionScreen").classList.toggle("active",which==="collection");$("homeBtn").style.visibility=which==="home"?"hidden":"visible"}
-function openCollection(which){section=which;activeStatus="W toku";favoriteOnly=false;$("search").value="";load();$("sectionTitle").textContent=which;$("counterLabel").textContent=which==="ANIME"?"ODCINKI":"ROZDZIAŁY";$("favFilter").classList.remove("heart");$("favFilter").textContent="♡";showScreen("collection");render()}
+function showScreen(which){$("homeScreen").classList.toggle("active",which==="home");$("collectionScreen").classList.toggle("active",which==="collection");document.body.classList.toggle("at-home",which==="home")}
+function openCollection(which){section=which;({by:sortBy,asc:sortAsc}=getSortConfig(which));viewMode=localStorage.getItem("mojaListaDomyslnyWidok")||"grid";activeStatus="W toku";favoriteOnly=false;$("search").value="";load();$("sectionTitle").textContent=which;$("counterLabel").textContent=which==="ANIME"?"ODCINKI":"ROZDZIAŁY";$("favFilter").classList.remove("heart");$("favFilter").textContent="♡";showScreen("collection");render()}
 function renderTabs(){$("tabs").innerHTML=STATUSES.map(s=>`<button class="tab ${activeStatus===s?"active":""}" data-status="${escapeHtml(s)}" style="--tabcolor:${STATUS_COLORS[s]}">${escapeHtml(s)}</button>`).join("");$("tabs").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{activeStatus=b.dataset.status;render()}))}
 function sortedEntries(){
  let arr=entries.filter(e=>normStatus(e.statusKarty)===activeStatus);
  const q=$("search").value.trim().toLocaleLowerCase("pl");
  if(q)arr=arr.filter(e=>(e.tytul||"").toLocaleLowerCase("pl").includes(q));
  if(favoriteOnly)arr=arr.filter(e=>e.czyUlubione);
- arr.sort((a,b)=>{if(!!a.czyUlubione!==!!b.czyUlubione)return a.czyUlubione?-1:1;let cmp=sortBy==="alpha"?(a.tytul||"").localeCompare(b.tytul||"","pl",{sensitivity:"base"}):(new Date(a.dataDodania||0)-new Date(b.dataDodania||0));return sortAsc?cmp:-cmp});
+ arr.sort((a,b)=>{if(!!a.czyUlubione!==!!b.czyUlubione)return a.czyUlubione?-1:1;let cmp=sortBy==="alpha"?(a.tytul||"").localeCompare(b.tytul||"","pl",{sensitivity:"base"}):sortBy==="progress"?(Number(a.aktualnyLicznik)||0)-(Number(b.aktualnyLicznik)||0):sortBy==="updated"?(new Date(a.dataAktualizacji||a.dataDodania||0)-new Date(b.dataAktualizacji||b.dataDodania||0)):(new Date(a.dataDodania||0)-new Date(b.dataDodania||0));return sortAsc?cmp:-cmp});
  return arr;
 }
 function thumb(e,cls="thumb"){if(e.zdjecieBase64)return `<div class="${cls}" style="--accent:${COLORS[e.kolor]||COLORS.Blue}"><img src="${e.zdjecieBase64}" alt=""></div>`;return `<div class="${cls}" style="--accent:${COLORS[e.kolor]||COLORS.Blue}">${ICONS[e.ikona]||"★"}</div>`}
-function changeCount(id,delta){const e=entries.find(x=>x.id===id);if(!e)return;e.aktualnyLicznik=Math.max(0,(Number(e.aktualnyLicznik)||0)+delta);if(delta>0&&e.maxLicznik!=null&&e.maxLicznik!==""&&e.aktualnyLicznik>=Number(e.maxLicznik))e.statusKarty="Zakończone";else if(delta<0&&normStatus(e.statusKarty)==="Zakończone")e.statusKarty="W toku";save();render()}
+function changeCount(id,delta){const e=entries.find(x=>x.id===id);if(!e)return;e.aktualnyLicznik=Math.max(0,(Number(e.aktualnyLicznik)||0)+delta);e.dataAktualizacji=new Date().toISOString();if(delta>0&&e.maxLicznik!=null&&e.maxLicznik!==""&&e.aktualnyLicznik>=Number(e.maxLicznik))e.statusKarty="Zakończone";else if(delta<0&&normStatus(e.statusKarty)==="Zakończone")e.statusKarty="W toku";save();render()}
 function toggleFavorite(id){const e=entries.find(x=>x.id===id);if(e){e.czyUlubione=!e.czyUlubione;save();render()}}
-function deleteEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;if(confirm(`Czy na pewno usunąć „${e.tytul}”?`)){entries=entries.filter(x=>x.id!==id);save();render();toast("Pozycja została usunięta.")}}
+function deleteEntry(id){const e=entries.find(x=>x.id===id);if(!e)return;if(localStorage.getItem("mojaListaPotwierdzajUsuwanie") === "false" || confirm(`Czy na pewno usunąć „${e.tytul}”?`)){entries=entries.filter(x=>x.id!==id);save();render();toast("Pozycja została usunięta.")}}
 function renderEntries(){
  const arr=sortedEntries(), host=$("entries");$("countBadge").textContent=`${arr.length} / ${entries.length}`;
  if(!arr.length){host.innerHTML='<div class="empty"><div style="font-size:34px;margin-bottom:8px">◌</div><strong>Brak pozycji spełniających kryteria</strong><div style="margin-top:7px">Dodaj tytuł albo zmień filtr wyszukiwania.</div></div>';return}
@@ -197,7 +293,7 @@ function renderStats(){
  $("statsBody").innerHTML=`<div class="stat"><span>ŁĄCZNY POSTĘP</span><strong>${total}</strong><span>zaliczonych ${section==="ANIME"?"odcinków":"rozdziałów"}</span></div>`+STATUSES.map(s=>`<div class="stat"><span>${escapeHtml(s.toUpperCase())}</span><strong>${entries.filter(e=>normStatus(e.statusKarty)===s).length}</strong></div>`).join("");
  $("statsBody").classList.toggle("open",statsOpen);$("statsChevron").textContent=statsOpen?"⌄":"⌃";
 }
-function render(){renderTabs();renderEntries();renderStats();$("sortBy").value=sortBy;$("sortDirection").textContent=sortAsc?"↑":"↓";$("viewMode").value=viewMode;$("randomBtn").style.display=activeStatus==="Planowane"?"inline-block":"none";$("favFilter").classList.toggle("heart",favoriteOnly);$("favFilter").textContent=favoriteOnly?"♥":"♡"}
+function render(){renderTabs();renderEntries();renderStats();$("sortBy").value=sortBy;$("sortDirection").textContent=sortAsc?"↑":"↓";document.querySelectorAll("[data-view]").forEach(b=>{let selected=b.dataset.view===viewMode;b.classList.toggle("active",selected);b.setAttribute("aria-pressed",String(selected))});$("randomBtn").style.display=activeStatus==="Planowane"?"inline-block":"none";$("favFilter").classList.toggle("heart",favoriteOnly);$("favFilter").textContent=favoriteOnly?"♥":"♡"}
 function openForm(id=null){
  editingId=id;const e=id?entries.find(x=>x.id===id):null;editDate=e?.dataDodania||new Date().toISOString();imageBase64=e?.zdjecieBase64||null;chosenIcon=e?.ikona|| (section==="ANIME"?"tv.fill":"book.fill");chosenColor=e?.kolor||(section==="ANIME"?"Red":"Blue");
  $("modalTitle").textContent=e?"Edytuj pozycję":"Dodaj nową pozycję";$("titleInput").value=e?.tytul||"";$("currentCount").value=e?.aktualnyLicznik??0;$("maxCount").value=e?.maxLicznik??"";$("statusInput").innerHTML=STATUSES.map(s=>`<option>${escapeHtml(s)}</option>`).join("");$("statusInput").value=normStatus(e?.statusKarty||"Planowane");renderStatusChoices();$("favoriteInput").checked=!!e?.czyUlubione;$("imageInput").value="";renderChoices();updatePreview();$("modalBackdrop").classList.add("open");$("titleInput").focus();
@@ -217,7 +313,7 @@ function renderChoices(){
 function updatePreview(){$("previewThumb").style.background=COLORS[chosenColor]||COLORS.Blue;$("previewThumb").innerHTML=imageBase64?`<img src="${imageBase64}" alt="">`:(ICONS[chosenIcon]||"★");$("removeImage").style.display=imageBase64?"inline-block":"none";$("iconField").style.display=imageBase64?"none":"flex"}
 function closeForm(){$("modalBackdrop").classList.remove("open")}
 function saveForm(ev){ev.preventDefault();const title=$("titleInput").value.trim();if(!title)return;const count=Math.max(0,parseInt($("currentCount").value,10)||0),maxVal=$("maxCount").value.trim(),max=maxVal===""?null:Math.max(1,parseInt(maxVal,10)||1);let status=$("statusInput").value;if(max!==null&&count>=max&&status!=="Oczekuje na kolejny sezon")status="Zakończone";
- const item={id:editingId||uid(),tytul:title,ikona:chosenIcon,kolor:chosenColor,aktualnyLicznik:count,maxLicznik:max,zdjecieBase64:imageBase64,statusKarty:status,dataDodania:editDate,czyUlubione:$("favoriteInput").checked};
+ const item={id:editingId||uid(),tytul:title,ikona:chosenIcon,kolor:chosenColor,aktualnyLicznik:count,maxLicznik:max,zdjecieBase64:imageBase64,statusKarty:status,dataDodania:editDate,dataAktualizacji:new Date().toISOString(),czyUlubione:$("favoriteInput").checked};
  if(editingId){const i=entries.findIndex(x=>x.id===editingId);if(i>=0)entries[i]=item;else entries.push(item)}else entries.push(item);
  save();closeForm();render();toast(editingId?"Zmiany zapisane.":"Dodano pozycję.");
 }
@@ -238,17 +334,58 @@ async function importCSV(file){
 }
 function randomPlanned(){const pool=entries.filter(e=>normStatus(e.statusKarty)==="Planowane");if(!pool.length){toast("Brak pozycji w Planowanych.");return}const e=pool[Math.floor(Math.random()*pool.length)];if(confirm(`Los na dziś: „${e.tytul}”!\n\nPrzenieść tę pozycję do „W toku” i zacząć?`)){e.statusKarty="W toku";save();activeStatus="W toku";render()}}
 document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>openCollection(b.dataset.open)));
-$("homeBtn").onclick=()=>showScreen("home");$("backBtn").onclick=()=>showScreen("home");
+$("backBtn").onclick=()=>showScreen("home");
 $("search").addEventListener("input",renderEntries);$("favFilter").onclick=()=>{favoriteOnly=!favoriteOnly;render()};
-$("sortBy").onchange=()=>{sortBy=$("sortBy").value;localStorage.setItem("wybraneKryteriumSortowania",sortBy);render()};
-$("sortDirection").onclick=()=>{sortAsc=!sortAsc;localStorage.setItem("kierunekSortowaniaRosnaco",String(sortAsc));render()};
-$("viewMode").onchange=()=>{viewMode=$("viewMode").value;localStorage.setItem("wybranyStylWidoku",viewMode);render()};
+$("sortBy").onchange=()=>{sortBy=$("sortBy").value;persistSort();render()};
+$("sortDirection").onclick=()=>{sortAsc=!sortAsc;persistSort();render()};
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>{viewMode=b.dataset.view;localStorage.setItem("wybranyStylWidoku",viewMode);render()});
 $("addBtn").onclick=()=>openForm();$("closeModal").onclick=closeForm;$("cancelModal").onclick=closeForm;$("modalBackdrop").addEventListener("click",e=>{if(e.target===$("modalBackdrop"))closeForm()});$("entryForm").onsubmit=saveForm;
 $("minusCount").onclick=()=>{$("currentCount").value=Math.max(0,(parseInt($("currentCount").value,10)||0)-1)};$("plusCount").onclick=()=>{$("currentCount").value=Math.max(0,(parseInt($("currentCount").value,10)||0)+1)};
 $("imageInput").onchange=()=>{const file=$("imageInput").files?.[0];if(!file)return;if(!file.type.startsWith("image/")){toast("Wybierz plik graficzny.");return}if(file.size>5*1024*1024){toast("Okładka jest większa niż 5 MB. Wybierz mniejszy obraz.");return}const reader=new FileReader();reader.onload=()=>{imageBase64=reader.result;updatePreview()};reader.readAsDataURL(file)};
 $("removeImage").onclick=()=>{imageBase64=null;updatePreview();renderChoices()};
-$("statsToggle").onclick=()=>{statsOpen=!statsOpen;renderStats()};$("exportBtn").onclick=exportCSV;$("importBtn").onclick=()=>$("csvFile").click();$("csvFile").onchange=()=>{const f=$("csvFile").files?.[0];if(f)importCSV(f);$("csvFile").value=""};$("randomBtn").onclick=randomPlanned;
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeForm();if((e.metaKey||e.ctrlKey)&&e.key==="Enter"&&$("modalBackdrop").classList.contains("open"))$("entryForm").requestSubmit()});
+const settingsState={collection:"ANIME",sortCollection:"ANIME"};
+function setting(key,fallback){return localStorage.getItem(key)??fallback}
+function applyCollectionSettings(){const size=setting("mojaListaRozmiarKafelkow","medium");["small","medium","large"].forEach(v=>document.body.classList.toggle(`tile-${v}`,v===size));document.body.classList.toggle("hide-tile-counter",setting("mojaListaPokazLicznik","true")==="false");document.body.classList.toggle("hide-tile-controls",setting("mojaListaPokazPrzyciski","true")==="false");document.body.classList.toggle("cover-contain",setting("mojaListaDopasowanieOkladek","cover")==="contain")}
+function selectSetting(group,attribute,value){document.querySelectorAll(`[${attribute}]`).forEach(b=>b.classList.toggle("active",b.getAttribute(attribute)===value))}
+function refreshSortSettings(){const c=getSortConfig(settingsState.sortCollection);selectSetting("", "data-sort-collection",settingsState.sortCollection);$("defaultSortSetting").value=c.by;selectSetting("","data-sort-order",c.asc?"asc":"desc")}
+
+function refreshSettings(){
+ const theme=localStorage.getItem("mojaListaMotyw")||"dark";
+ document.querySelectorAll("[data-theme]").forEach(b=>b.classList.toggle("active",b.dataset.theme===theme));
+ document.querySelectorAll("[data-data]").forEach(b=>b.classList.toggle("active",b.dataset.data===settingsState.collection));
+ $("confirmDeleteSetting").checked=localStorage.getItem("mojaListaPotwierdzajUsuwanie")!=="false";
+ selectSetting("","data-tile-size",setting("mojaListaRozmiarKafelkow","medium"));selectSetting("","data-default-view",setting("mojaListaDomyslnyWidok","grid"));selectSetting("","data-cover-fit",setting("mojaListaDopasowanieOkladek","cover"));
+ $("showCounterSetting").checked=setting("mojaListaPokazLicznik","true")!=="false";$("showProgressSetting").checked=setting("mojaListaPokazPrzyciski","true")!=="false";$("shortcutsSetting").checked=setting("mojaListaSkroty","true")!=="false";refreshSortSettings();
+ const anime=JSON.parse(localStorage.getItem(KEYS.ANIME)||"[]"),manga=JSON.parse(localStorage.getItem(KEYS.MANGA)||"[]");
+ $("animeTotal").textContent=`Anime: ${Array.isArray(anime)?anime.length:0}`;$("mangaTotal").textContent=`Manga: ${Array.isArray(manga)?manga.length:0}`;
+ const bytes=[KEYS.ANIME,KEYS.MANGA].reduce((n,k)=>n+(localStorage.getItem(k)||"").length*2,0);
+ $("storageTotal").textContent=`Dane kolekcji: ${(bytes/1024/1024).toFixed(2)} MB`;
+}
+function applyTheme(){const t=localStorage.getItem("mojaListaMotyw")||"dark";document.body.classList.toggle("light-theme",t==="light"||(t==="system"&&matchMedia("(prefers-color-scheme: light)").matches));refreshSettings()}
+function closeSettings(){$("settingsBackdrop").classList.remove("open")}
+$("settingsBtn").onclick=()=>{settingsState.collection=section;settingsState.sortCollection=section;refreshSettings();$("settingsBackdrop").classList.add("open")};
+$("closeSettings").onclick=closeSettings;$("settingsBackdrop").onclick=e=>{if(e.target===$("settingsBackdrop"))closeSettings()};
+document.querySelectorAll("[data-theme]").forEach(b=>b.onclick=()=>{localStorage.setItem("mojaListaMotyw",b.dataset.theme);applyTheme()});
+document.querySelectorAll("[data-data]").forEach(b=>b.onclick=()=>{settingsState.collection=b.dataset.data;refreshSettings()});
+$("confirmDeleteSetting").onchange=e=>localStorage.setItem("mojaListaPotwierdzajUsuwanie",String(e.target.checked));
+function bindChoices(attr,key,callback){document.querySelectorAll(`[${attr}]`).forEach(b=>b.onclick=()=>{localStorage.setItem(key,b.getAttribute(attr));callback();refreshSettings()})}
+bindChoices("data-tile-size","mojaListaRozmiarKafelkow",()=>{applyCollectionSettings();render()});
+bindChoices("data-default-view","mojaListaDomyslnyWidok",()=>{});
+bindChoices("data-cover-fit","mojaListaDopasowanieOkladek",()=>{applyCollectionSettings();render()});
+[["showCounterSetting","mojaListaPokazLicznik"],["showProgressSetting","mojaListaPokazPrzyciski"],["shortcutsSetting","mojaListaSkroty"]].forEach(([id,key])=>{$(id).onchange=e=>{localStorage.setItem(key,String(e.target.checked));applyCollectionSettings()}});
+document.querySelectorAll("[data-sort-collection]").forEach(b=>b.onclick=()=>{settingsState.sortCollection=b.dataset.sortCollection;refreshSettings()});
+function changeSettingsSort(by,asc){localStorage.setItem(sortConfigKey(settingsState.sortCollection),JSON.stringify({by,asc}));if(section===settingsState.sortCollection){sortBy=by;sortAsc=asc;render()}refreshSettings()}
+$("defaultSortSetting").onchange=e=>{const c=getSortConfig(settingsState.sortCollection);changeSettingsSort(e.target.value,c.asc)};
+document.querySelectorAll("[data-sort-order]").forEach(b=>b.onclick=()=>{const c=getSortConfig(settingsState.sortCollection);changeSettingsSort(c.by,b.dataset.sortOrder==="asc")});
+function withCollection(target,fn){const oldSection=section,oldEntries=entries;section=target;load();try{return fn()}finally{section=oldSection;entries=oldEntries}}
+$("settingsExport").onclick=()=>withCollection(settingsState.collection,exportCSV);
+$("settingsImport").onclick=()=>$("csvFile").click();
+$("settingsBackup").onclick=()=>{const data={format:"moja-lista-backup-v1",createdAt:new Date().toISOString(),anime:JSON.parse(localStorage.getItem(KEYS.ANIME)||"[]"),manga:JSON.parse(localStorage.getItem(KEYS.MANGA)||"[]")};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="moja-lista-pelna-kopia.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast("Pełna kopia została przygotowana.")};
+$("settingsRestore").onclick=()=>$("backupFile").click();
+$("backupFile").onchange=async e=>{const f=e.target.files?.[0];e.target.value="";if(!f)return;try{if(f.size>30*1024*1024)throw Error("Plik przekracza 30 MB");const data=JSON.parse(await f.text());if(data.format!=="moja-lista-backup-v1"||!Array.isArray(data.anime)||!Array.isArray(data.manga)||![...data.anime,...data.manga].every(x=>x&&typeof x==="object"&&!Array.isArray(x)&&typeof x.tytul==="string"))throw Error("Nieprawidłowy format kopii");const anime=JSON.stringify(data.anime),manga=JSON.stringify(data.manga);if(!confirm(`Przywrócić kopię?\n\nZastąpi ona obecne ${JSON.parse(localStorage.getItem(KEYS.ANIME)||"[]").length} anime i ${JSON.parse(localStorage.getItem(KEYS.MANGA)||"[]").length} mangi danymi z pliku (${data.anime.length} anime, ${data.manga.length} mang).\n\nTej operacji nie można cofnąć. Przed kontynuowaniem pobierz aktualną kopię JSON.`))return;const oldA=localStorage.getItem(KEYS.ANIME),oldM=localStorage.getItem(KEYS.MANGA);try{localStorage.setItem(KEYS.ANIME,anime);localStorage.setItem(KEYS.MANGA,manga)}catch(err){if(oldA===null)localStorage.removeItem(KEYS.ANIME);else localStorage.setItem(KEYS.ANIME,oldA);if(oldM===null)localStorage.removeItem(KEYS.MANGA);else localStorage.setItem(KEYS.MANGA,oldM);throw err}load();render();refreshSettings();toast("Przywrócono obie kolekcje.")}catch(err){toast("Nie udało się przywrócić kopii: "+err.message)}};
+try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",applyTheme)}catch{}applyTheme();applyCollectionSettings();
+$("statsToggle").onclick=()=>{statsOpen=!statsOpen;renderStats()};$("csvFile").onchange=async()=>{const f=$("csvFile").files?.[0];if(f){const oldSection=section,oldEntries=entries;section=settingsState.collection;load();try{await importCSV(f)}finally{section=oldSection;entries=oldEntries;if($("collectionScreen").classList.contains("active"))render();refreshSettings()}}$("csvFile").value=""};$("randomBtn").onclick=randomPlanned;
+document.addEventListener("keydown",e=>{if(setting("mojaListaSkroty","true")==="false")return;if(e.key==="Escape"){closeForm();closeSettings();return}if((e.metaKey||e.ctrlKey)&&e.key==="Enter"&&$("modalBackdrop").classList.contains("open")){$("entryForm").requestSubmit();return}if(e.ctrlKey||e.metaKey||e.altKey||e.target.closest("input,textarea,select,[contenteditable]"))return;if(!$("collectionScreen").classList.contains("active")||$("settingsBackdrop").classList.contains("open")||$("modalBackdrop").classList.contains("open"))return;if(e.key==="/"){e.preventDefault();$("search").focus()}else if(e.key.toLowerCase()==="n"){e.preventDefault();openForm()}});
 showScreen("home");
 })();
 </script>
