@@ -50,11 +50,26 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;bo
 .favorite-toggle input:checked~.favorite-switch:before{transform:translateX(18px)}
 
 /* Status wybierany jednym kliknięciem, bez listy rozwijanej */
-.status-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.status-option{min-height:42px;text-align:left;padding:10px 12px;background:#202431;border:1px solid #3a4052;border-radius:10px;font-size:13px;font-weight:700;white-space:normal}
+.status-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.modal{width:min(800px,100%)}
+.status-option{min-height:40px;text-align:center;padding:8px 7px;background:#202431;border:1px solid #3a4052;border-radius:10px;font-size:13px;font-weight:700;white-space:normal}
 .status-option.selected{background:color-mix(in srgb,var(--status-color) 16%,#202431);border-color:var(--status-color);color:var(--status-color);box-shadow:inset 3px 0 var(--status-color)}
 .status-option:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-@media(max-width:440px){.status-choices{grid-template-columns:1fr}}
+@media(max-width:600px){.status-choices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Kompaktowe ulubione: serce nad przełącznikiem */
+.favorite-field{display:flex;justify-content:flex-end;align-items:center}
+.favorite-field .favorite-toggle{display:flex!important;flex-direction:column;justify-content:center;align-items:center;gap:7px;width:104px;min-height:100px;padding:10px 8px;border-radius:13px}
+.favorite-field .favorite-heart{font-size:31px;line-height:1}
+.favorite-field .favorite-switch{flex:0 0 24px;width:42px;height:24px}
+.favorite-field .favorite-text{flex:none;font-size:11px;font-weight:700;color:var(--muted)}
+
+/* Ustawienia okładki, ikony i koloru po lewej; ulubione po prawej */
+.media-settings{display:grid;grid-template-columns:minmax(0,1fr) 116px;gap:20px;align-items:center;min-width:0}
+.media-settings-main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.media-settings .favorite-field{justify-content:center;align-self:center}
+.media-settings .favorite-toggle{width:104px}
+@media(max-width:520px){.media-settings{grid-template-columns:minmax(0,1fr) 100px;gap:9px}.media-settings .favorite-toggle{width:94px}.media-settings .preview{flex-wrap:wrap}.media-settings #imageInput{max-width:100%}}
 </style>
 </head>
 <body>
@@ -108,9 +123,13 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;color:inherit;bo
         <div class="form-field"><label id="counterLabel" for="currentCount">ODCINKI</label><div class="counter"><button type="button" id="minusCount">−</button><input id="currentCount" type="number" min="0" step="1" value="0"><button type="button" id="plusCount">＋</button></div></div>
         <div class="form-field"><label for="maxCount">MAKSYMALNA LICZBA (OPCJONALNIE)</label><input id="maxCount" type="number" min="1" step="1" placeholder="Brak limitu"></div>
         <div class="form-field wide"><label id="statusLabel">STATUS</label><select id="statusInput" hidden aria-hidden="true" tabindex="-1"></select><div id="statusChoices" class="status-choices" role="group" aria-labelledby="statusLabel"></div></div>
-        <div class="form-field wide"><label class="favorite-toggle"><input id="favoriteInput" type="checkbox"><span class="favorite-heart" aria-hidden="true">♥</span><span class="favorite-text">Dodaj do ulubionych</span><span class="favorite-switch" aria-hidden="true"></span></label></div>
-        <div class="form-field wide"><label>OKŁADKA / ZDJĘCIE</label><div class="preview"><div id="previewThumb" class="thumb">▣</div><div><input id="imageInput" type="file" accept="image/*"><button type="button" id="removeImage" class="quiet danger">Usuń zdjęcie</button></div></div></div>
-        <div class="form-field wide" id="iconField"><label>IKONA ZASTĘPCZA</label><div id="iconChoices" class="choice-row"></div><label>KOLOR</label><div id="colorChoices" class="choice-row"></div></div>
+        <div class="media-settings wide">
+          <div class="media-settings-main">
+            <div class="form-field"><label>OKŁADKA / ZDJĘCIE</label><div class="preview"><div id="previewThumb" class="thumb">▣</div><div><input id="imageInput" type="file" accept="image/*"><button type="button" id="removeImage" class="quiet danger">Usuń zdjęcie</button></div></div></div>
+            <div class="form-field" id="iconField"><label>IKONA ZASTĘPCZA</label><div id="iconChoices" class="choice-row"></div><label>KOLOR</label><div id="colorChoices" class="choice-row"></div></div>
+          </div>
+          <div class="form-field favorite-field"><label class="favorite-toggle" title="Dodaj do ulubionych"><input id="favoriteInput" type="checkbox"><span class="favorite-heart" aria-hidden="true">♥</span><span class="favorite-switch" aria-hidden="true"></span><span class="favorite-text">Ulubione</span></label></div>
+        </div>
       </div>
       <div class="modal-foot"><button type="button" id="cancelModal">Anuluj</button><div class="spacer"></div><button class="primary" type="submit">Zapisz</button></div>
     </form>
